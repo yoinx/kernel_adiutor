@@ -93,6 +93,10 @@
     <string name="startup_commands_list">Start-Up Commands List:</string>
     <string name="startup_commands_list_delete">Tapping on an individual command will delete it from the database.</string>
     <string name="startup_commands_delete">Tap this card to delete all saved startup settings</string>
+    <string name="startup_commands_delete_all">Are you sure you want to delete all Start-up Commands?</string>
+    <string name="startup_commands_delete_all_yes">Yes</string>
+    <string name="startup_commands_delete_all_no">No</string>
+    <string name="startup_commands_none">No startup Commands Found</string>
     <string name="settings">Settings</string>
     <string name="faq">FAQ</string>
     <string name="about_us">About Us</string>

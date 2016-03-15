@@ -79,7 +79,7 @@ public class StartUpCommandsFragment extends RecyclerViewFragment implements Car
         }
         else {
                 mStartUpCommandsDelete = new CardViewItem.DCardView();
-                mStartUpCommandsDelete.setTitle("No startup Commands Found");
+                mStartUpCommandsDelete.setTitle(getString(R.string.startup_commands_none));
 
                 addView(mStartUpCommandsDelete);
         }
@@ -110,8 +110,8 @@ public class StartUpCommandsFragment extends RecyclerViewFragment implements Car
 
         if (dCardView == mStartUpCommandsDelete) {
             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-            builder.setMessage("Are you sure you want to delete all Start-up Commands??").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
+            builder.setMessage(getString(R.string.startup_commands_delete_all)).setPositiveButton(getString(R.string.startup_commands_delete_all_yes), dialogClickListener)
+                    .setNegativeButton(getString(R.string.startup_commands_delete_all_no), dialogClickListener).show();
         }
         for (int i = 0; i < mStartUpCommands.length; i++)
         if (dCardView == mStartUpCommands[i]) {

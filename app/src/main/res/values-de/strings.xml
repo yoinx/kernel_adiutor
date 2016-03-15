@@ -66,7 +66,7 @@
   <string name="initd">Init.d</string>
   <string name="startup_commands">Neustart Befehle</string>
   <string name="startup_commands_list">Liste von Neustart Befehlen:</string>
-  <string name="startup_commands_list_delete">Durch Antippen eines Befehls wird dieses aus der Datenbank gelöscht.</string>
+  <string name="startup_commands_list_delete">Durch Antippen eines Befehls wird dieser aus der Datenbank gelöscht.</string>
   <string name="startup_commands_delete">Durch das Antippen dieser Karte lassen sich alle gespeicherten Neustart Befehle löschen.</string>
   <string name="startup_commands_delete_all">Sollen wirklich alle Neustart Befehle gelöscht werden?</string>
   <string name="startup_commands_delete_all_yes">Ja</string>

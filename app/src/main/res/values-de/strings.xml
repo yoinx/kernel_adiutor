@@ -544,6 +544,10 @@
   <string name="password_too_long">Das Passwort ist zu lang</string>
   <string name="set_password_first">Lege zuerst ein Passwort fest</string>
   <string name="show_sections">Abschnitte anzeigen</string>
+  <string name="per_app">Per App Profile</string>
+  <string name="per_app_toast">Per App Toast</string>
+  <string name="per_app_toast_summary">Zeige eine Toast-Benachrichtigung an sobald bei einer Per App Erkennung ein Profil angewendet wird.</string>
+  <string name="execute">Ausführen</string>
   <string name="misspelled">Wieso hast du \"Auditor\" falsch geschrieben?</string>
   <string name="misspelled_summary">Adiutor ist lateinisch und bedeutet Helfer.</string>
   <string name="cpu_freq_not_sticking">Warum bleibt meine eingestellte CPU-Frequenz nicht bestehen?</string>
@@ -563,4 +567,13 @@
   <string name="google_plus_summary">Werde Teil unserer Community.</string>
   <string name="translation">Übersetzung</string>
   <string name="translation_summary">Helfen Sie mir, diese App zu übersetzen!</string>
+
+  <string name="modification">Modifizierte Version von Kernel Adiutor</string>
+  <string name="modification_summary">Diese Applikation wurde um verschiedene Features erweitert, die nicht in der Originalversion von Kernel Adiutor enthalten sind.</string>
+
+  <string name="modification_version">Modifizierte Version</string>
+  <string name="modification_version_number">Build 12.1</string>
+
+  <string name="accessibility_service_label">KA Per App Monitor</string>
+  <string name="accessibility_service_desc">Dienst zur Überwachung, ob sich eine Vordergrund App durch das Laden eines Per App Profils ändert.</string>
 </resources>

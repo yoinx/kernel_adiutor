@@ -346,35 +346,7 @@ public class Wake implements Constants {
         List<String> list = new ArrayList<>();
         list.add(context.getString(R.string.disabled));
         if (S2W_FILE != null) {
-            switch (S2W_FILE) {
-                case SW2:
-                    list.add(context.getString(R.string.right));
-                    list.add(context.getString(R.string.left));
-                    list.add(context.getString(R.string.right) + " or " + context.getString(R.string.left));
-                    list.add(context.getString(R.string.up));
-                    list.add(context.getString(R.string.right) + " or " + context.getString(R.string.up));
-                    list.add(context.getString(R.string.left) + " or " + context.getString(R.string.up));
-                    list.add(context.getString(R.string.right) + " or " + context.getString(R.string.left) + " or " + context.getString(R.string.up));
-                    list.add(context.getString(R.string.down));
-                    list.add(context.getString(R.string.right) + " or " + context.getString(R.string.down));
-                    list.add(context.getString(R.string.left) + " or " + context.getString(R.string.down));
-                    list.add(context.getString(R.string.right) + " or " + context.getString(R.string.left) + " or " + context.getString(R.string.down));
-                    list.add(context.getString(R.string.up) + " or " + context.getString(R.string.down));
-                    list.add(context.getString(R.string.right) + " or " + context.getString(R.string.up) + " or " + context.getString(R.string.down));
-                    list.add(context.getString(R.string.left) + " or " + context.getString(R.string.up) + " or " + context.getString(R.string.down));
-                    list.add(context.getString(R.string.right) + " or " + context.getString(R.string.left) + " or " + context.getString(R.string.up) + " or " + context.getString(R.string.down));
-                    break;
-                case SW2_2:
-                    list.add(context.getString(R.string.s2w_right));
-                    list.add(context.getString(R.string.s2w_left));
-                    list.add(context.getString(R.string.s2w_up));
-                    list.add(context.getString(R.string.s2w_down));
-                    list.add(context.getString(R.string.s2w_any));
-                    break;
-                default:
-                    list.add(context.getString(R.string.enabled));
-                    break;
-            }
+            list.add(context.getString(R.string.enabled));
         }
         return list;
     }
@@ -415,20 +387,8 @@ public class Wake implements Constants {
         List<String> list = new ArrayList<>();
         if (DT2W_FILE != null) {
             list.add(context.getString(R.string.disabled));
-            switch (DT2W_FILE) {
-                case LGE_TOUCH_CORE_DT2W:
-                    list.add(context.getString(R.string.center));
-                    list.add(context.getString(R.string.full));
-                    list.add(context.getString(R.string.bottom_half));
-                    list.add(context.getString(R.string.top_half));
-                    break;
-                case DT2W:
-                    list.add(context.getString(R.string.enabled));
-                    break;
-                default:
-                    list.add(context.getString(R.string.enabled));
-                    break;
-            }
+            list.add(context.getString(R.string.bottom_half));
+            list.add(context.getString(R.string.full));
         }
         return list;
     }

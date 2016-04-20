@@ -42,7 +42,7 @@ public class WakeLockFragment extends RecyclerViewFragment implements SeekBarCar
 
     public void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        wakelockInit();
+        if (WakeLock.hasWakeLock()) wakelockInit();
     }
 
     

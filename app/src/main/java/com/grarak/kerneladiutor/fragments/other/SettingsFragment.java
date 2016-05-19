@@ -184,7 +184,7 @@ public class SettingsFragment extends RecyclerViewFragment {
         }
 
         final List<String> list = new ArrayList<>();
-        for (int i = 5; i < 421; i *= 2)
+        for (int i = 1; i < 421; i *= 2)
             list.add(i + getString(R.string.sec));
 
         PopupCardView.DPopupCard mApplyonbootDelayCard = new PopupCardView.DPopupCard(list);

@@ -20,11 +20,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
@@ -43,6 +45,9 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.database.ProfileDB;
 import com.kerneladiutor.library.root.RootUtils;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -295,6 +300,92 @@ public class SettingsFragment extends RecyclerViewFragment {
         });
 
         addView(mDmesgCard);
+
+        CardViewItem.DCardView mDumpSysFs = new CardViewItem.DCardView();
+        mDumpSysFs.setTitle(getString(R.string.dump_sysfs));
+        mDumpSysFs.setDescription(getString(R.string.dump_sysfs_summary));
+        mDumpSysFs.setOnDCardListener(new CardViewItem.DCardView.OnDCardListener() {
+            @Override
+            public void onClick(CardViewItem.DCardView dCardView) {
+                dumpsysfs();
+            }
+        });
+
+        addView(mDumpSysFs);
+
+    }
+
+    private void dumpsysfs() {
+        String arrays[][] = {Constants.CPU_ARRAY, Constants.CPU_VOLTAGE_ARRAY, Constants.BATTERY_ARRAY, Constants.IO_ARRAY, Constants.VM_ARRAY};
+        String twodarrays[][][] = {Constants.CPU_HOTPLUG_ARRAY, Constants.THERMAL_ARRAYS, Constants.SCREEN_ARRAY, Constants.WAKE_ARRAY, Constants.SOUND_ARRAY, Constants.WAKELOCK_ARRAY, Constants.MISC_ARRAY};
+        // loop through each array in the constants file. These contain all the other arrays.
+        // have to do this once for the 1d arrays and again for the 2 arrays
+        try {
+            File sysfsdump = new File(MainActivity.context.getFilesDir(), "sysfsdump.txt");
+            if (sysfsdump.exists()) {
+                sysfsdump.delete();
+            }
+            FileWriter output = new FileWriter(sysfsdump);
+            for (int i = 0; i < arrays.length; i++) {
+                for (int a = 0; a < arrays[i].length; a++) {
+                    if (Utils.existFile(arrays[i][a]) && !arrays[i][a].contains("/system/bin")) {
+                        File sysfspath = new File(arrays[i][a]);
+                        if (sysfspath.isDirectory()) {
+                            Log.i(Constants.TAG, "Dir: " + arrays[i][a]);
+                            String path = arrays[i][a];
+                            output.append("Dir: " + path + "\n");
+                            File dir = new File(path);
+                            File[] directoryListing = dir.listFiles();
+                            if (directoryListing != null) {
+                                for (File child : directoryListing) {
+                                    if (!child.isDirectory()) {
+                                        Log.i(Constants.TAG, "File: " + child + " | Value: " + Utils.readFile(child.toString()));
+                                        output.append("File: " + child + " | Value: " + Utils.readFile(child.toString()) + "\n");
+                                    }
+                                }
+                            }
+                        } else {
+                            Log.i(Constants.TAG, "Path: " + arrays[i][a] + " | Value: " + Utils.readFile(arrays[i][a]));
+                            output.append("Path: " + arrays[i][a] + " | Value: " + Utils.readFile(arrays[i][a]) + "\n");
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < twodarrays.length; i++) {
+                for (int a = 0; a < twodarrays[i].length; a++) {
+                    for (int b = 0; b < twodarrays[i][a].length; b++) {
+                        if (Utils.existFile(twodarrays[i][a][b]) && !twodarrays[i][a][b].contains("/system/bin")) {
+                            File sysfspath = new File(twodarrays[i][a][b]);
+                            if (sysfspath.isDirectory()) {
+                                Log.i(Constants.TAG, "Dir: " + twodarrays[i][a][b]);
+                                String path = twodarrays[i][a][b];
+                                output.append("Dir: " + path + "\n");
+                                File dir = new File(path);
+                                File[] directoryListing = dir.listFiles();
+                                if (directoryListing != null) {
+                                    for (File child : directoryListing) {
+                                        if (!child.isDirectory()) {
+                                            Log.i(Constants.TAG, "File: " + child + " | Value: " + Utils.readFile(child.toString()));
+                                            output.append("File: " + child + " | Value: " + Utils.readFile(child.toString()) + "\n");
+                                        }
+                                    }
+                                }
+                            } else {
+                                Log.i(Constants.TAG, "Path: " + twodarrays[i][a][b] + " | Value: " + Utils.readFile(twodarrays[i][a][b]));
+                                output.append("Path: " + twodarrays[i][a][b] + " | Value: " + Utils.readFile(twodarrays[i][a][b]) + "\n");
+                            }
+                        }
+                    }
+                }
+            }
+            output.flush();
+            output.close();
+
+            // Should send file to intent here to share it.
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private class Execute extends AsyncTask<String, Void, Void> {

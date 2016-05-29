@@ -59,6 +59,8 @@ import java.util.List;
  */
 public class SettingsFragment extends RecyclerViewFragment {
 
+    ProgressDialog sysfsDialog = null;
+
     @Override
     public boolean showApplyOnBoot() {
         return false;
@@ -310,7 +312,16 @@ public class SettingsFragment extends RecyclerViewFragment {
         mDumpSysFs.setOnDCardListener(new CardViewItem.DCardView.OnDCardListener() {
             @Override
             public void onClick(CardViewItem.DCardView dCardView) {
-                dumpsysfs();
+                sysfsDialog = ProgressDialog.show(MainActivity.context, getString(R.string.dump_sysfs_dialog_title),
+                        getString(R.string.dump_sysfs_dialog_summary), true);
+                Thread t = new Thread(new Runnable()
+                {
+                    public void run()
+                    {
+                        dumpsysfs();
+                    }
+                });
+                t.start();
             }
         });
 
@@ -353,7 +364,9 @@ public class SettingsFragment extends RecyclerViewFragment {
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(sysfsdump));
             sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent, "Share with"));
+            startActivity(Intent.createChooser(sendIntent, getString(R.string.dump_sysfs_share_title)));
+
+            sysfsDialog.cancel();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -380,23 +393,6 @@ public class SettingsFragment extends RecyclerViewFragment {
         } else {
             Log.i(Constants.TAG, "Path: " + file + " | Value: " + Utils.readFile(file));
             ret = ret + "Path: " + file + " | Value: " + Utils.readFile(file) + "\n";
-        }
-        return ret;
-    }
-
-    public static String convertFileToString(File file) {
-        String ret = "";
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-            reader.close();
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return ret;
     }

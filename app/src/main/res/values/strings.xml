@@ -943,4 +943,8 @@
     <string name="accessibility_service_label">KA Per App Monitor</string>
     <string name="accessibility_service_desc">Service to monitor when foreground app changes for per-app profile loading</string>
 
+    <string name="dump_sysfs_dialog_title">SysFs Dump</string>
+    <string name="dump_sysfs_dialog_summary">This will take a second. Please wait...</string>
+
+    <string name="dump_sysfs_share_title">Share via</string>
 </resources>

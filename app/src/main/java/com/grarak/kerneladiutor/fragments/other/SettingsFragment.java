@@ -329,25 +329,7 @@ public class SettingsFragment extends RecyclerViewFragment {
             for (int i = 0; i < arrays.length; i++) {
                 for (int a = 0; a < arrays[i].length; a++) {
                     if (Utils.existFile(arrays[i][a]) && !arrays[i][a].contains("/system/bin")) {
-                        File sysfspath = new File(arrays[i][a]);
-                        if (sysfspath.isDirectory()) {
-                            Log.i(Constants.TAG, "Dir: " + arrays[i][a]);
-                            String path = arrays[i][a];
-                            output.append("Dir: " + path + "\n");
-                            File dir = new File(path);
-                            File[] directoryListing = dir.listFiles();
-                            if (directoryListing != null) {
-                                for (File child : directoryListing) {
-                                    if (!child.isDirectory()) {
-                                        Log.i(Constants.TAG, "File: " + child + " | Value: " + Utils.readFile(child.toString()));
-                                        output.append("File: " + child + " | Value: " + Utils.readFile(child.toString()) + "\n");
-                                    }
-                                }
-                            }
-                        } else {
-                            Log.i(Constants.TAG, "Path: " + arrays[i][a] + " | Value: " + Utils.readFile(arrays[i][a]));
-                            output.append("Path: " + arrays[i][a] + " | Value: " + Utils.readFile(arrays[i][a]) + "\n");
-                        }
+                        output.write(sysfsrecord(arrays[i][a]));
                     }
                 }
             }
@@ -355,25 +337,7 @@ public class SettingsFragment extends RecyclerViewFragment {
                 for (int a = 0; a < twodarrays[i].length; a++) {
                     for (int b = 0; b < twodarrays[i][a].length; b++) {
                         if (Utils.existFile(twodarrays[i][a][b]) && !twodarrays[i][a][b].contains("/system/bin")) {
-                            File sysfspath = new File(twodarrays[i][a][b]);
-                            if (sysfspath.isDirectory()) {
-                                Log.i(Constants.TAG, "Dir: " + twodarrays[i][a][b]);
-                                String path = twodarrays[i][a][b];
-                                output.append("Dir: " + path + "\n");
-                                File dir = new File(path);
-                                File[] directoryListing = dir.listFiles();
-                                if (directoryListing != null) {
-                                    for (File child : directoryListing) {
-                                        if (!child.isDirectory()) {
-                                            Log.i(Constants.TAG, "File: " + child + " | Value: " + Utils.readFile(child.toString()));
-                                            output.append("File: " + child + " | Value: " + Utils.readFile(child.toString()) + "\n");
-                                        }
-                                    }
-                                }
-                            } else {
-                                Log.i(Constants.TAG, "Path: " + twodarrays[i][a][b] + " | Value: " + Utils.readFile(twodarrays[i][a][b]));
-                                output.append("Path: " + twodarrays[i][a][b] + " | Value: " + Utils.readFile(twodarrays[i][a][b]) + "\n");
-                            }
+                            output.write(sysfsrecord(twodarrays[i][a][b]));
                         }
                     }
                 }
@@ -386,6 +350,30 @@ public class SettingsFragment extends RecyclerViewFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String sysfsrecord (String file) {
+        String ret = "";
+        File sysfspath = new File(file);
+        if (sysfspath.isDirectory()) {
+            Log.i(Constants.TAG, "Dir: " + file);
+            String path = file;
+            ret = ret + "Dir: " + path + "\n";
+            File dir = new File(path);
+            File[] directoryListing = dir.listFiles();
+            if (directoryListing != null) {
+                for (File child : directoryListing) {
+                    if (!child.isDirectory()) {
+                        Log.i(Constants.TAG, "File: " + child + " | Value: " + Utils.readFile(child.toString()));
+                        ret = ret + "File: " + child + " | Value: " + Utils.readFile(child.toString()) + "\n";
+                    }
+                }
+            }
+        } else {
+            Log.i(Constants.TAG, "Path: " + file + " | Value: " + Utils.readFile(file));
+            ret = ret + "Path: " + file + " | Value: " + Utils.readFile(file) + "\n";
+        }
+        return ret;
     }
 
     private class Execute extends AsyncTask<String, Void, Void> {

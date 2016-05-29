@@ -45,9 +45,12 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.database.ProfileDB;
 import com.kerneladiutor.library.root.RootUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -378,6 +381,22 @@ public class SettingsFragment extends RecyclerViewFragment {
         } else {
             Log.i(Constants.TAG, "Path: " + file + " | Value: " + Utils.readFile(file));
             ret = ret + "Path: " + file + " | Value: " + Utils.readFile(file) + "\n";
+        }
+        return ret;
+    }
+
+    public static String convertFileToString(File file) throws Exception {
+        String ret = "";
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            reader.close();
+            return sb.toString();
+        } catch (IOException e) {
         }
         return ret;
     }

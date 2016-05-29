@@ -324,7 +324,7 @@ public class SettingsFragment extends RecyclerViewFragment {
         // loop through each array in the constants file. These contain all the other arrays.
         // have to do this once for the 1d arrays and again for the 2 arrays
         try {
-            File sysfsdump = new File(MainActivity.context.getFilesDir(), "sysfsdump.txt");
+            File sysfsdump = File.createTempFile("sysfsdump", ".txt", MainActivity.context.getExternalMediaDirs()[0]);
             if (sysfsdump.exists()) {
                 sysfsdump.delete();
             }
@@ -352,9 +352,8 @@ public class SettingsFragment extends RecyclerViewFragment {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(sysfsdump));
-            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             sendIntent.setType("text/plain");
-            startActivity(sendIntent);
+            startActivity(Intent.createChooser(sendIntent, "Share with"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -385,7 +384,7 @@ public class SettingsFragment extends RecyclerViewFragment {
         return ret;
     }
 
-    public static String convertFileToString(File file) throws Exception {
+    public static String convertFileToString(File file) {
         String ret = "";
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -397,6 +396,7 @@ public class SettingsFragment extends RecyclerViewFragment {
             reader.close();
             return sb.toString();
         } catch (IOException e) {
+            e.printStackTrace();
         }
         return ret;
     }

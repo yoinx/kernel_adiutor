@@ -346,6 +346,12 @@ public class SettingsFragment extends RecyclerViewFragment {
             output.close();
 
             // Should send file to intent here to share it.
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(sysfsdump));
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
 
         } catch (IOException e) {
             e.printStackTrace();

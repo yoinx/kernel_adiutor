@@ -187,6 +187,7 @@
   <string name="override_vmin_summary">Deaktivieren, um Hersteller-Limits zu entfernen.</string>
   
   <!-- CPU Hotplug -->
+  <string name="no_enable_toggle">Achtung: Dieser Hotplug hat keinen Ein-/Aus-Schalter. Beachten Sie, dass mehrere gleichzeitig aktivierte Hotplugs Fehlfunktionen verursachen können.</string>
   <string name="mpdecision">MPDecision</string>
   <string name="mpdecision_summary">QCOMs Hotplugging Lösung. Sie werden wahrscheinlich Schwierigkeiten mit der Änderung der Frequenzen feststellen, wenn diese Funktion aktiv ist.</string>
   <string name="intelliplug">IntelliPlug</string>

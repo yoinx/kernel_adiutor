@@ -50,6 +50,7 @@ public class WakeFragment extends RecyclerViewFragment implements PopupCardView.
 
     private SeekBarCardView.DSeekBarCard mWakeTimeoutCard, mS2WTimeCard, mDT2WTimeBetweenTapsCard, mDT2WFeatherXCard, mDT2WFeatherYCard, mWakeGesturesVibStrengthCard;
     private SwitchCardView.DSwitchCard mPowerKeySuspendCard;
+    private SwitchCardView.DSwitchCard mPowerKeySuspendLgeCard;
 
     @Override
     public void init(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class WakeFragment extends RecyclerViewFragment implements PopupCardView.
         if (Wake.hasPocketMode()) pocketModeInit();
         if (Wake.hasWakeTimeout()) wakeTimeoutInit();
         if (Wake.hasPowerKeySuspend()) powerKeySuspendInit();
+	if (Wake.hasPowerKeySuspendLge()) powerKeySuspendLgeInit();
         if (Wake.hasS2WTime()) S2WTimeInit();
         if (Wake.hasDT2WTimeBetweenTaps()) DT2WTimeBetweenTapsInit();
         if (Wake.hasDT2WFeatherX()) DT2WFeatherXInit();
@@ -236,6 +238,16 @@ public class WakeFragment extends RecyclerViewFragment implements PopupCardView.
         addView(mPowerKeySuspendCard);
     }
 
+    private void powerKeySuspendLgeInit() {
+        mPowerKeySuspendLgeCard = new SwitchCardView.DSwitchCard();
+        mPowerKeySuspendLgeCard.setTitle(getString(R.string.power_key_suspend));
+        mPowerKeySuspendLgeCard.setDescription(getString(R.string.power_key_suspend_summary));
+        mPowerKeySuspendLgeCard.setChecked(Wake.isPowerKeySuspendLgeActive());
+        mPowerKeySuspendLgeCard.setOnDSwitchCardListener(this);
+
+        addView(mPowerKeySuspendLgeCard);
+    }
+
     private void S2WTimeInit() {
         List<String> list = new ArrayList<>();
         for (int i = 1; i <= 200; i++)
@@ -330,6 +342,8 @@ public class WakeFragment extends RecyclerViewFragment implements PopupCardView.
             Wake.activatePocketMode(checked, getActivity());
         else if (dSwitchCard == mPowerKeySuspendCard)
             Wake.activatePowerKeySuspend(checked, getActivity());
+        else if (dSwitchCard == mPowerKeySuspendLgeCard)
+            Wake.activatePowerKeySuspendLge(checked, getActivity());
         else {
             for (int i = 0; i < mGestureCards.length; i++)
                 if (dSwitchCard == mGestureCards[i]) {

@@ -674,6 +674,7 @@ public interface Constants {
     };
 
     String POWER_KEY_SUSPEND = "/sys/module/qpnp_power_on/parameters/pwrkey_suspend";
+    String POWER_KEY_SUSPEND_LGE = "/sys/devices/virtual/input/lge_touch/dt_wake_pwr_disable";
 
     String WAKE_VIB_STRENGTH = "/sys/android_touch/vib_strength";
     String WAKE_ST2W_TIME = "/sys/android_touch/sweep_timeout";

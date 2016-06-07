@@ -52,6 +52,18 @@ public class Wake implements Constants {
         return Utils.existFile(POWER_KEY_SUSPEND);
     }
 
+    public static void activatePowerKeySuspendLge(boolean active, Context context) {
+        Control.runCommand(active ? "1" : "0", POWER_KEY_SUSPEND_LGE, Control.CommandType.GENERIC, context);
+    }
+
+    public static boolean isPowerKeySuspendLgeActive() {
+        return Utils.readFile(POWER_KEY_SUSPEND_LGE).equals("1");
+    }
+
+    public static boolean hasPowerKeySuspendLge() {
+        return Utils.existFile(POWER_KEY_SUSPEND_LGE);
+    }
+
     public static boolean hasVibStrength() {
         if (Utils.existFile(WAKE_VIB_STRENGTH)) return true;
         return false;

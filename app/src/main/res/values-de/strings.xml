@@ -229,6 +229,8 @@
   <string name="down_lock_duration">Sperrdauer</string>
   <string name="down_lock_duration_summary">Minimales Intervall, in der eine CPU aktiv bleibt.</string>
   <string name="fshift">FShift</string>
+  <string name="dyn_plug">Dyn_Plug</string>
+  <string name="dyn_plug_summary">Ein Kernel-Ersatz für Qualcomms MPDecision. Von Stratos Karafotis entwickelt.</string>
   <string name="blu_plug">Blu_Plug</string>
   <string name="blu_plug_summary">Ein Kernel-Ersatz für Qualcomms MPDecision. Von Code_Blue Team entwickelt.</string>
   <string name="powersaver_mode">Energiesparmodus</string>

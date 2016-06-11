@@ -254,6 +254,83 @@ public class CPUHotplug implements Constants {
         return false;
     }
 
+    public static void setDynPlugDownTimerCnt(int value, Context context) {
+        Control.runCommand(String.valueOf(value), HOTPLUG_DYN_PLUG_DOWN_TIMER_CNT, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getDynPlugDownTimerCnt() {
+        return Utils.stringToInt(Utils.readFile(HOTPLUG_DYN_PLUG_DOWN_TIMER_CNT));
+    }
+
+    public static boolean hasDynPlugDownTimerCnt() {
+        return Utils.existFile(HOTPLUG_DYN_PLUG_DOWN_TIMER_CNT);
+    }
+
+    public static void setDynPlugUpTimerCnt(int value, Context context) {
+        Control.runCommand(String.valueOf(value), HOTPLUG_DYN_PLUG_UP_TIMER_CNT, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getDynPlugUpTimerCnt() {
+        return Utils.stringToInt(Utils.readFile(HOTPLUG_DYN_PLUG_UP_TIMER_CNT));
+    }
+
+    public static boolean hasDynPlugUpTimerCnt() {
+        return Utils.existFile(HOTPLUG_DYN_PLUG_UP_TIMER_CNT);
+    }
+
+    public static void setDynPlugUpThreshold(int value, Context context) {
+        Control.runCommand(String.valueOf(value), HOTPLUG_DYN_PLUG_UP_THRESHOLD, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getDynPlugUpThreshold() {
+        return Utils.stringToInt(Utils.readFile(HOTPLUG_DYN_PLUG_UP_THRESHOLD));
+    }
+
+    public static boolean hasDynPlugUpThreshold() {
+        return Utils.existFile(HOTPLUG_DYN_PLUG_UP_THRESHOLD);
+    }
+
+    public static void setDynPlugMaxOnline(int value, Context context) {
+        Control.runCommand(String.valueOf(value), HOTPLUG_DYN_PLUG_MAX_ONLINE, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getDynPlugMaxOnline() {
+        return Utils.stringToInt(Utils.readFile(HOTPLUG_DYN_PLUG_MAX_ONLINE));
+    }
+
+    public static boolean hasDynPlugMaxOnline() {
+        return Utils.existFile(HOTPLUG_DYN_PLUG_MAX_ONLINE);
+    }
+
+    public static void setDynPlugMinOnline(int value, Context context) {
+        Control.runCommand(String.valueOf(value), HOTPLUG_DYN_PLUG_MIN_ONLINE, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getDynPlugMinOnline() {
+        return Utils.stringToInt(Utils.readFile(HOTPLUG_DYN_PLUG_MIN_ONLINE));
+    }
+
+    public static boolean hasDynPlugMinOnline() {
+        return Utils.existFile(HOTPLUG_DYN_PLUG_MIN_ONLINE);
+    }
+
+    public static void activateDynPlug(boolean active, Context context) {
+        Control.runCommand(active ? "Y" : "N", HOTPLUG_DYN_PLUG_ENABLE, Control.CommandType.GENERIC, context);
+        if (active) togglehotplugs("DynPlug", context);
+    }
+
+    public static boolean isDynPlugActive() {
+        return Utils.readFile(HOTPLUG_DYN_PLUG_ENABLE).equals("Y");
+    }
+
+    public static boolean hasDynPlugEnable() {
+        return Utils.existFile(HOTPLUG_DYN_PLUG_ENABLE);
+    }
+
+    public static boolean hasDynPlug() {
+        return Utils.existFile(HOTPLUG_DYN_PLUG);
+    }
+
     public static void setZenDecisionBatThresholdIgnore(int value, Context context) {
         Control.runCommand(String.valueOf(value), HOTPLUG_ZEN_DECISION_BAT_THRESHOLD_IGNORE, Control.CommandType.GENERIC, context);
     }
@@ -1551,6 +1628,7 @@ public class CPUHotplug implements Constants {
         if (CPUHotplug.isMsmHotplugActive() && hasMsmHotplugEnable() && !activehotplug.equals("MSMHotPlug")) Control.runCommand("0", MSM_HOTPLUG_ENABLE_FILE, Control.CommandType.GENERIC, context);
         if (CPUHotplug.isStateHelperActive() && hasStateHelperEnable() && !activehotplug.equals("State_Helper")) Control.runCommand("0", STATE_HELPER_ENABLE, Control.CommandType.GENERIC, context);
         if (CPUHotplug.isLazyPlugTouchBoostActive() && hasLazyPlugEnable() && !activehotplug.equals("LazyPlug")) Control.runCommand("0", HOTPLUG_LAZYPLUG_TOUCH_BOOST_ACTIVE, Control.CommandType.GENERIC, context);
+        if (CPUHotplug.isDynPlugActive() && hasDynPlugEnable() && !activehotplug.equals("DynPlug")) Control.runCommand("N", HOTPLUG_DYN_PLUG_ENABLE, Control.CommandType.GENERIC, context);
     }
 
     public static boolean hasMSMSleeper () {

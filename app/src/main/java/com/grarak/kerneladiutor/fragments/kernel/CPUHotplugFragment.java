@@ -158,6 +158,13 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
     private PopupCardView.DPopupCard mLazyPlugProfileCard;
     private SwitchCardView.DSwitchCard mLazyPlugTouchBoostActiveCard;
 
+    private SwitchCardView.DSwitchCard mDynPlugEnableCard;
+    private SeekBarCardView.DSeekBarCard mDynPlugUpThresholdCard;
+    private SeekBarCardView.DSeekBarCard mDynPlugUpTimerCntCard;
+    private SeekBarCardView.DSeekBarCard mDynPlugDownTimerCntCard;
+    private SeekBarCardView.DSeekBarCard mDynPlugMaxOnlineCard;
+    private SeekBarCardView.DSeekBarCard mDynPlugMinOnlineCard;
+
     private SwitchCardView.DSwitchCard mMSMSleeperEnableCard;
     private SeekBarCardView.DSeekBarCard mMSMSleeperUpThresholdCard, mMSMSleeperMaxOnlineCard, mMSMSleeperSuspendMaxOnlineCard,
             mMSMSleeperUpCountMaxCard, mMSMSleeperDownCountMaxCard;
@@ -183,6 +190,7 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
         if (CPUHotplug.hasThunderPlugEnable()) thunderPlugInit();
         if (CPUHotplug.hasAutoSmpEnable()) autoSmpInit();
         if (CPUHotplug.hasLazyPlugEnable()) lazyPlugInit();
+        if (CPUHotplug.hasDynPlugEnable()) dynPlugInit();
         if (CPUHotplug.hasMSMSleeperEnable()) msmSleeperInit();
         if (CPUHotplug.hasStateHelperEnable()) msmState_Helper_Init();
         if (CPUHotplug.hasbch()) bchInit();
@@ -315,6 +323,18 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
             mLazyPlugEnableCard.setOnDSwitchCardListener(this);
 
             addView(mLazyPlugEnableCard);
+        }
+    }
+
+    private void dynPlugInit() {
+        if (CPUHotplug.hasDynPlugEnable()) {
+            mDynPlugEnableCard = new SwitchCardView.DSwitchCard();
+            mDynPlugEnableCard.setTitle(getString(R.string.dyn_plug));
+            mDynPlugEnableCard.setDescription(getString(R.string.dyn_plug_summary));
+            mDynPlugEnableCard.setChecked(CPUHotplug.isDynPlugActive());
+            mDynPlugEnableCard.setOnDSwitchCardListener(this);
+
+            addView(mDynPlugEnableCard);
         }
     }
 
@@ -1732,6 +1752,83 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
             }
         }
 
+        if (CPUHotplug.isDynPlugActive() || (!CPUHotplug.hasDynPlugEnable() && CPUHotplug.hasDynPlug())) {
+            DDivider mDynPlugDividerCard = new DDivider();
+            mDynPlugDividerCard.setText(getString(R.string.dyn_plug));
+            if (!CPUHotplug.hasDynPlugEnable() && CPUHotplug.hasDynPlug()) {
+                mDynPlugDividerCard.setDescription(getString(R.string.no_enable_toggle));
+            }
+            views.add(mDynPlugDividerCard);
+
+            if (CPUHotplug.hasDynPlugUpThreshold()) {
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < 1001; i++)
+                    list.add(String.valueOf(i));
+
+                mDynPlugUpThresholdCard = new SeekBarCardView.DSeekBarCard(list);
+                mDynPlugUpThresholdCard.setTitle(getString(R.string.threshold));
+                mDynPlugUpThresholdCard.setProgress(CPUHotplug.getDynPlugUpThreshold());
+                mDynPlugUpThresholdCard.setOnDSeekBarCardListener(this);
+
+                views.add(mDynPlugUpThresholdCard);
+            }
+
+            if (CPUHotplug.hasDynPlugUpTimerCnt()) {
+                List<String> list = new ArrayList<>();
+                for (float i = 0; i < 21; i++)
+                    list.add(String.valueOf(i / (float) 2).replace(".0", ""));
+
+                mDynPlugUpTimerCntCard = new SeekBarCardView.DSeekBarCard(list);
+                mDynPlugUpTimerCntCard.setTitle(getString(R.string.up_timer_cnt));
+                mDynPlugUpTimerCntCard.setDescription(getString(R.string.up_timer_cnt_summary));
+                mDynPlugUpTimerCntCard.setProgress(CPUHotplug.getDynPlugUpTimerCnt());
+                mDynPlugUpTimerCntCard.setOnDSeekBarCardListener(this);
+
+                views.add(mDynPlugUpTimerCntCard);
+            }
+
+            if (CPUHotplug.hasDynPlugDownTimerCnt()) {
+                List<String> list = new ArrayList<>();
+                for (float i = 0; i < 21; i++)
+                    list.add(String.valueOf(i / (float) 2).replace(".0", ""));
+
+                mDynPlugDownTimerCntCard = new SeekBarCardView.DSeekBarCard(list);
+                mDynPlugDownTimerCntCard.setTitle(getString(R.string.down_timer_cnt));
+                mDynPlugDownTimerCntCard.setDescription(getString(R.string.down_timer_cnt_summary));
+                mDynPlugDownTimerCntCard.setProgress(CPUHotplug.getDynPlugDownTimerCnt());
+                mDynPlugDownTimerCntCard.setOnDSeekBarCardListener(this);
+
+                views.add(mDynPlugDownTimerCntCard);
+            }
+
+            if (CPUHotplug.hasDynPlugMaxOnline()) {
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < CPU.getCoreCount(); i++) list.add(String.valueOf(i + 1));
+
+                mDynPlugMaxOnlineCard = new SeekBarCardView.DSeekBarCard(list);
+                mDynPlugMaxOnlineCard.setTitle(getString(R.string.max_cpu_online));
+                mDynPlugMaxOnlineCard.setDescription(getString(R.string.max_cpu_online_summary));
+                mDynPlugMaxOnlineCard.setProgress(CPUHotplug.getDynPlugMaxOnline() - 1);
+                mDynPlugMaxOnlineCard.setOnDSeekBarCardListener(this);
+
+                views.add(mDynPlugMaxOnlineCard);
+            }
+
+            if (CPUHotplug.hasDynPlugMinOnline()) {
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < CPU.getCoreCount(); i++)
+                    list.add(String.valueOf(i + 1));
+
+                mDynPlugMinOnlineCard = new SeekBarCardView.DSeekBarCard(list);
+                mDynPlugMinOnlineCard.setTitle(getString(R.string.min_cpu_online));
+                mDynPlugMinOnlineCard.setDescription(getString(R.string.min_cpu_online_summary));
+                mDynPlugMinOnlineCard.setProgress(CPUHotplug.getDynPlugMinOnline() - 1);
+                mDynPlugMinOnlineCard.setOnDSeekBarCardListener(this);
+
+                views.add(mDynPlugMinOnlineCard);
+            }
+        }
+
         if (CPUHotplug.isMSMSleeperActive() || (!CPUHotplug.hasMSMSleeperEnable() && CPUHotplug.hasMSMSleeper())) {
             DDivider mMSMSleeperDividerCard = new DDivider();
             mMSMSleeperDividerCard.setText(getString(R.string.msm_sleeper));
@@ -1954,6 +2051,8 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
             CPUHotplug.activateLazyPlug(checked, getActivity());
         else if (dSwitchCard == mLazyPlugTouchBoostActiveCard)
             CPUHotplug.activateLazyPlugTouchBoost(checked, getActivity());
+        else if (dSwitchCard == mDynPlugEnableCard)
+            CPUHotplug.activateDynPlug(checked, getActivity());
         else if (dSwitchCard == mbchCard)
             CPUHotplug.activatebch(checked, getActivity());
         view.invalidate();
@@ -2142,6 +2241,16 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
             CPUHotplug.setLazyPlugCpuNrRunTreshold(position, getActivity());
         else if (dSeekBarCard == mLazyPlugNrPossibleCoresCard)
             CPUHotplug.setLazyPlugNrPossibleCores(position, getActivity());
+        else if (dSeekBarCard == mDynPlugUpThresholdCard)
+            CPUHotplug.setDynPlugUpThreshold(position, getActivity());
+        else if (dSeekBarCard == mDynPlugUpTimerCntCard)
+            CPUHotplug.setDynPlugUpTimerCnt(position, getActivity());
+        else if (dSeekBarCard == mDynPlugDownTimerCntCard)
+            CPUHotplug.setDynPlugDownTimerCnt(position, getActivity());
+        else if (dSeekBarCard == mDynPlugMaxOnlineCard)
+            CPUHotplug.setDynPlugMaxOnline(position, getActivity());
+        else if (dSeekBarCard == mDynPlugMinOnlineCard)
+            CPUHotplug.setDynPlugMinOnline(position, getActivity());
         else if (dSeekBarCard == mMSMSleeperMaxOnlineCard)
             CPUHotplug.setMSMSleeperMaxOnline(position + 1, getActivity());
         else if (dSeekBarCard == mMSMSleeperSuspendMaxOnlineCard)

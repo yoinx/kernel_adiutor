@@ -1808,7 +1808,7 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
                 mDynPlugMaxOnlineCard = new SeekBarCardView.DSeekBarCard(list);
                 mDynPlugMaxOnlineCard.setTitle(getString(R.string.max_cpu_online));
                 mDynPlugMaxOnlineCard.setDescription(getString(R.string.max_cpu_online_summary));
-                mDynPlugMaxOnlineCard.setProgress(CPUHotplug.getDynPlugMaxOnline() - 1);
+                mDynPlugMaxOnlineCard.setProgress(CPUHotplug.getDynPlugMaxOnline());
                 mDynPlugMaxOnlineCard.setOnDSeekBarCardListener(this);
 
                 views.add(mDynPlugMaxOnlineCard);
@@ -1822,7 +1822,7 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
                 mDynPlugMinOnlineCard = new SeekBarCardView.DSeekBarCard(list);
                 mDynPlugMinOnlineCard.setTitle(getString(R.string.min_cpu_online));
                 mDynPlugMinOnlineCard.setDescription(getString(R.string.min_cpu_online_summary));
-                mDynPlugMinOnlineCard.setProgress(CPUHotplug.getDynPlugMinOnline() - 1);
+                mDynPlugMinOnlineCard.setProgress(CPUHotplug.getDynPlugMinOnline());
                 mDynPlugMinOnlineCard.setOnDSeekBarCardListener(this);
 
                 views.add(mDynPlugMinOnlineCard);

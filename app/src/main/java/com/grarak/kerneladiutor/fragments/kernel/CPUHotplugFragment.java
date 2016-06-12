@@ -2248,9 +2248,9 @@ public class CPUHotplugFragment extends RecyclerViewFragment implements
         else if (dSeekBarCard == mDynPlugDownTimerCntCard)
             CPUHotplug.setDynPlugDownTimerCnt(position, getActivity());
         else if (dSeekBarCard == mDynPlugMaxOnlineCard)
-            CPUHotplug.setDynPlugMaxOnline(position, getActivity());
+            CPUHotplug.setDynPlugMaxOnline(position + 1, getActivity());
         else if (dSeekBarCard == mDynPlugMinOnlineCard)
-            CPUHotplug.setDynPlugMinOnline(position, getActivity());
+            CPUHotplug.setDynPlugMinOnline(position + 1, getActivity());
         else if (dSeekBarCard == mMSMSleeperMaxOnlineCard)
             CPUHotplug.setMSMSleeperMaxOnline(position + 1, getActivity());
         else if (dSeekBarCard == mMSMSleeperSuspendMaxOnlineCard)

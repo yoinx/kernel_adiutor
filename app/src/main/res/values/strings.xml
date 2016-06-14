@@ -197,6 +197,7 @@
     <string name="global_offset">Global Offset</string>
     <string name="override_vmin">Override Minimum Voltage</string>
     <string name="override_vmin_summary">Disable to remove manufacturer limits on undervolting</string>
+    <string name="non_default_reference">Default Voltages not saved, using current voltages as reference. Please reboot for accurate refernce values.</string>
 
     <!-- CPU Hotplug -->
     <string name="no_enable_toggle">Warning: This Hotplug has no enable or disable toggle. Be aware that having more than one hotplug enabled can cause erratic behavior.</string>

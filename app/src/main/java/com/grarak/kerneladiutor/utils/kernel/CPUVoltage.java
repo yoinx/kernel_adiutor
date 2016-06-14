@@ -17,6 +17,8 @@
 package com.grarak.kerneladiutor.utils.kernel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.grarak.kerneladiutor.utils.Constants;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -24,7 +26,9 @@ import com.grarak.kerneladiutor.utils.root.Control;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by willi on 26.12.14.
@@ -181,5 +185,23 @@ public class CPUVoltage implements Constants {
             }
         return false;
     }
+
+    public static boolean storeVoltageTable (Context context) {
+        List<String> freqs = CPUVoltage.getFreqs();
+        List<String> voltages = CPUVoltage.getVoltages();
+        Map<String, String> freqtable = new HashMap<String, String>();
+
+        // Store Kernel's Stock Freq/Voltage table
+        SharedPreferences.Editor preferences = context.getSharedPreferences("voltage_table", 0).edit();
+        for (int i = 0; i < freqs.size(); i++) {
+            freqtable.put(freqs.get(i), voltages.get(i));
+            preferences.putString(freqs.get(i), voltages.get(i));
+        }
+        preferences.commit();
+        Log.i(Constants.TAG, "FreqTable: " + freqtable);
+
+        return true;
+    }
+
 
 }

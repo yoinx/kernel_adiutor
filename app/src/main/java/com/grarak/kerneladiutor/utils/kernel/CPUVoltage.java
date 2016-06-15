@@ -187,6 +187,9 @@ public class CPUVoltage implements Constants {
     }
 
     public static boolean storeVoltageTable (Context context) {
+        // Have to call this function to pre-load variables
+        hasCpuVoltage();
+
         List<String> freqs = CPUVoltage.getFreqs();
         List<String> voltages = CPUVoltage.getVoltages();
         Map<String, String> freqtable = new HashMap<String, String>();

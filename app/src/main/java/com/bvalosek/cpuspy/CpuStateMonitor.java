@@ -56,25 +56,23 @@ public class CpuStateMonitor {
     /**
      * simple struct for states/time
      */
-    public class CpuState implements Comparable<CpuState> {
+    public final class CpuState implements Comparable<CpuState> {
+
+        public final int freq;
+        public final long duration;
+
         /**
          * init with freq and duration
          */
-        public CpuState(int a, long b) {
-            freq = a;
-            duration = b;
+        public CpuState(int freq, long duration) {
+            this.freq = freq;
+            this.duration = duration;
         }
-
-        public int freq = 0;
-        public long duration = 0;
-
         /**
          * for sorting, compare the freqs
          */
-        public int compareTo(@NonNull CpuState state) {
-            Integer a = freq;
-            Integer b = state.freq;
-            return a.compareTo(b);
+        public int compareTo(@NonNull CpuState other) {
+            return Integer.compare(freq, other.freq);
         }
     }
 

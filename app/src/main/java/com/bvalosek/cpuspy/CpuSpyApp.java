@@ -7,7 +7,6 @@
 
 package com.bvalosek.cpuspy;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.grarak.kerneladiutor.utils.Utils;
@@ -18,7 +17,7 @@ import java.util.Map;
 /**
  * main application class
  */
-public class CpuSpyApp extends Application {
+public class CpuSpyApp{
 
     private final String PREF_OFFSETS;
 
@@ -30,16 +29,6 @@ public class CpuSpyApp extends Application {
     public CpuSpyApp(int core) {
         PREF_OFFSETS = "offsets" + core;
         _monitor = new CpuStateMonitor(core);
-    }
-
-    /**
-     * On application start, load the saved offsets and stash the current kernel
-     * version string
-     */
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        loadOffsets(getApplicationContext());
     }
 
     /**

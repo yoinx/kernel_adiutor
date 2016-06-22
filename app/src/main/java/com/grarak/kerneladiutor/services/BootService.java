@@ -21,7 +21,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -56,9 +55,7 @@ import com.grarak.kerneladiutor.utils.tools.UpdateChecker;
 import com.kerneladiutor.library.root.RootUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by willi on 08.03.15.
@@ -87,11 +84,10 @@ public class BootService extends Service {
         final List<String> applys = new ArrayList<>();
         final List<String> plugins = new ArrayList<>();
 
-        CPUVoltage.storeVoltageTable(getApplicationContext());
+        CPUVoltage.storeVoltageTable(this);
 
-
-        if (Screen.isScreenAutoHBMActive(getApplicationContext()) && Screen.hasScreenHBM()) {
-            getApplicationContext().startService(new Intent(getApplicationContext(), AutoHighBrightnessModeService.class));
+        if (Screen.isScreenAutoHBMActive(this) && Screen.hasScreenHBM()) {
+            startService(new Intent(this, AutoHighBrightnessModeService.class));
         }
 
         Class[] classes = {BatteryFragment.class, CPUFragment.class, CPUHotplugFragment.class,

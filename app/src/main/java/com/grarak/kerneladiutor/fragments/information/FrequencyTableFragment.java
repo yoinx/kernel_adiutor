@@ -1,65 +1,59 @@
-//-----------------------------------------------------------------------------
-//
-// (C) Brandon Valosek, 2011 <bvalosek@gmail.com>
-//
-//-----------------------------------------------------------------------------
-// Modified by Willi Ye to work as Fragment and with with big.LITTLE
-
 package com.grarak.kerneladiutor.fragments.information;
 
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bvalosek.cpuspy.CpuSpyApp;
-import com.bvalosek.cpuspy.CpuStateMonitor;
 import com.grarak.kerneladiutor.R;
-import com.grarak.kerneladiutor.elements.DDivider;
 import com.grarak.kerneladiutor.elements.cards.CardViewItem;
 import com.grarak.kerneladiutor.fragments.RecyclerViewFragment;
 import com.grarak.kerneladiutor.utils.Constants;
 import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.kernel.CPU;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-/**
- * main activity class
- */
 public class FrequencyTableFragment extends RecyclerViewFragment implements Constants {
 
-    private SwipeRefreshLayout refreshLayout;
+    @Override
+    protected boolean allowPullToRefresh() {
+        return true;
+    }
 
-    private CpuSpyApp cpuSpyApp;
+    @Override
+    public void refreshView() {
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                removeAllViews();
+            }
 
-    private CardViewItem.DCardView uptimeCard;
-    private CardViewItem.DCardView additionalCard;
-    private CardViewItem.DCardView frequencyCard;
-    private LinearLayout uiStatesView;
+            @Override
+            protected Void doInBackground(Void... params) {
+                generateView();
+                return null;
+            }
 
-    private CpuSpyApp cpuSpyAppLITTLE;
-
-    private CardViewItem.DCardView uptimeCardLITTLE;
-    private CardViewItem.DCardView additionalCardLITTLE;
-    private CardViewItem.DCardView frequencyCardLITTLE;
-    private LinearLayout uiStatesViewLITTLE;
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                refreshLayout.setRefreshing(false);
+            }
+        }.execute();
+    }
 
     @Override
     public int getSpan() {
@@ -72,300 +66,138 @@ public class FrequencyTableFragment extends RecyclerViewFragment implements Cons
     }
 
     @Override
-    public RecyclerView getRecyclerView() {
-        View view = getParentView(R.layout.swiperefresh_fragment);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
-        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_primary));
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new RefreshStateDataTask().execute();
-            }
-        });
-
-        return (RecyclerView) view.findViewById(R.id.recycler_view);
-    }
-
-    @Override
-    public void preInit(Bundle savedInstanceState) {
-        super.preInit(savedInstanceState);
-
-        fabView.setVisibility(View.GONE);
-        fabView = null;
-
-        backgroundView.setVisibility(View.GONE);
-        backgroundView = null;
-    }
-
-    /**
-     * Initialize the Fragment
-     */
-    @Override
     public void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
-
-        cpuSpyApp = new CpuSpyApp(CPU.getBigCore());
-
-        if (CPU.isBigLITTLE()) {
-            DDivider bigDivider = new DDivider();
-            bigDivider.setText(getString(R.string.big).toLowerCase(Locale.getDefault()));
-            addView(bigDivider);
-        }
-
-        uptimeCard = new CardViewItem.DCardView();
-        uptimeCard.setTitle(getString(R.string.uptime));
-        addView(uptimeCard);
-
-        additionalCard = new CardViewItem.DCardView();
-        additionalCard.setTitle(getString(R.string.unused_cpu_states));
-        addView(additionalCard);
-
-        uiStatesView = new LinearLayout(getActivity());
-        uiStatesView.setOrientation(LinearLayout.VERTICAL);
-        frequencyCard = new CardViewItem.DCardView();
-        frequencyCard.setTitle(getString(R.string.frequency_table));
-        frequencyCard.setView(uiStatesView);
-        frequencyCard.setFullSpan(true);
-        addView(frequencyCard);
-
-        if (CPU.isBigLITTLE()) {
-            cpuSpyAppLITTLE = new CpuSpyApp(CPU.getLITTLEcore());
-
-            DDivider LITTLEDivider = new DDivider();
-            LITTLEDivider.setText(getString(R.string.little).toUpperCase(Locale.getDefault()));
-            addView(LITTLEDivider);
-
-            uptimeCardLITTLE = new CardViewItem.DCardView();
-            uptimeCardLITTLE.setTitle(getString(R.string.uptime));
-            addView(uptimeCardLITTLE);
-
-            additionalCardLITTLE = new CardViewItem.DCardView();
-            additionalCardLITTLE.setTitle(getString(R.string.unused_cpu_states));
-            addView(additionalCardLITTLE);
-
-            uiStatesViewLITTLE = new LinearLayout(getActivity());
-            uiStatesViewLITTLE.setOrientation(LinearLayout.VERTICAL);
-            frequencyCardLITTLE = new CardViewItem.DCardView();
-            frequencyCardLITTLE.setTitle(getString(R.string.frequency_table));
-            frequencyCardLITTLE.setView(uiStatesViewLITTLE);
-            frequencyCardLITTLE.setFullSpan(true);
-            addView(frequencyCardLITTLE);
-        }
+        generateView();
     }
 
-    @Override
-    public void postInit(Bundle savedInstanceState) {
-        super.postInit(savedInstanceState);
-        new RefreshStateDataTask().execute();
-    }
+    private void generateView() {
 
-    /**
-     * called when we want to inflate the menu
-     */
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.frequency_table_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+        CardViewItem.DCardView muptimeCard = new CardViewItem.DCardView();
+        muptimeCard.setTitle("System Times:");
+        muptimeCard.setDescription(
+        "Uptime: " + getDurationBreakdown(SystemClock.elapsedRealtime()) +
+        "\nAwake Time: " + getDurationBreakdown(SystemClock.uptimeMillis()) +
+        "\nDeep Sleep: " + getDurationBreakdown(SystemClock.elapsedRealtime() - SystemClock.uptimeMillis())
+        );
+        addView(muptimeCard);
 
-    /**
-     * called to handle a menu event
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // what it do maybe
-        switch (item.getItemId()) {
-        /* pressed the load menu button */
-            case R.id.menu_reset:
-                try {
-                    cpuSpyApp.getCpuStateMonitor().setOffsets();
-                } catch (CpuStateMonitor.CpuStateMonitorException e) {
-                    e.printStackTrace();
-                }
-                cpuSpyApp.saveOffsets(getActivity());
-
-                if (cpuSpyAppLITTLE != null) {
-                    try {
-                        cpuSpyAppLITTLE.getCpuStateMonitor().setOffsets();
-                    } catch (CpuStateMonitor.CpuStateMonitorException e) {
-                        e.printStackTrace();
-                    }
-                    cpuSpyAppLITTLE.saveOffsets(getActivity());
-                }
-                break;
-            case R.id.menu_restore:
-                cpuSpyApp.getCpuStateMonitor().removeOffsets();
-                cpuSpyApp.saveOffsets(getActivity());
-                if (cpuSpyAppLITTLE != null) {
-                    cpuSpyAppLITTLE.getCpuStateMonitor().removeOffsets();
-                    cpuSpyAppLITTLE.saveOffsets(getActivity());
-                }
-                break;
-        }
-        updateView();
-
-        // made it
-        return true;
-    }
-
-    private void updateView() {
-        updateView(uiStatesView, cpuSpyApp, frequencyCard, uptimeCard, additionalCard);
-        if (cpuSpyAppLITTLE != null)
-            updateView(uiStatesViewLITTLE, cpuSpyAppLITTLE, frequencyCardLITTLE, uptimeCardLITTLE, additionalCardLITTLE);
-    }
-
-    /**
-     * Generate and update all UI elements
-     */
-    private void updateView(LinearLayout uiStatesView, CpuSpyApp cpuSpyApp, CardViewItem.DCardView frequencyCard,
-                            CardViewItem.DCardView uptimeCard, CardViewItem.DCardView additionalCard) {
-        if (!isAdded()) return;
-        /**
-         * Get the CpuStateMonitor from the app, and iterate over all states,
-         * creating a row if the duration is > 0 or otherwise marking it in
-         * extraStates (missing)
-         */
-        uiStatesView.removeAllViews();
-        List<String> extraStates = new ArrayList<>();
-        for (CpuStateMonitor.CpuState state : cpuSpyApp.getCpuStateMonitor().getStates()) {
-            if (state.duration > 0) {
-                addView(frequencyCard);
-                try {
-                    generateStateRow(state, uiStatesView, cpuSpyApp.getCpuStateMonitor());
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            } else
-                extraStates.add(state.freq == 0 ? getString(R.string.deep_sleep) : state.freq / 1000
-                        + getString(R.string.mhz));
-        }
-
-        // show the red warning label if no states found
-        if (cpuSpyApp.getCpuStateMonitor().getStates().size() == 0) {
-            removeView(uptimeCard);
-            removeView(frequencyCard);
-        }
-
-        // update the total state time
-        uptimeCard.setDescription(sToString(cpuSpyApp.getCpuStateMonitor().getTotalStateTime() / 100));
-
-        // for all the 0 duration states, add the the Unused State area
-        if (extraStates.size() > 0) {
-            int n = 0;
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (String s : extraStates) {
-                if (n++ > 0) stringBuilder.append(",").append(" ");
-                stringBuilder.append(s);
-            }
-
-            additionalCard.setDescription(stringBuilder.toString());
-        } else additionalCard.setDescription("-");
-    }
-
-    /**
-     * @return A nicely formatted String representing tSec seconds
-     */
-    private static String sToString(long tSec) {
-        long h = (long) Math.floor(tSec / (60 * 60));
-        long m = (long) Math.floor((tSec - h * 60 * 60) / 60);
-        long s = tSec % 60;
-        String sDur;
-        sDur = h + ":";
-        if (m < 10) sDur += "0";
-        sDur += m + ":";
-        if (s < 10) sDur += "0";
-        sDur += s;
-
-        return sDur;
-    }
-
-    /**
-     * View that corresponds to a CPU freq state row as specified by
-     * the state parameter
-     */
-    private void generateStateRow(CpuStateMonitor.CpuState state, ViewGroup parent, CpuStateMonitor monitor) {
-        // inflate the XML into a view in the parent
-        LinearLayout layout = (LinearLayout) LayoutInflater.from(getActivity())
-                .inflate(R.layout.state_row, parent, false);
-
-        // what percentage we've got
-        float per = (float) state.duration * 100 / monitor.getTotalStateTime();
-        String sPer = (int) per + "%";
-
-        // state name
-        String sFreq = state.freq == 0 ? getString(R.string.deep_sleep) : state.freq / 1000 + "MHz";
-
-        // duration
-        long tSec = state.duration / 100;
-        String sDur = sToString(tSec);
-
-        // map UI elements to objects
-        TextView freqText = (TextView) layout.findViewById(R.id.ui_freq_text);
-        TextView durText = (TextView) layout.findViewById(R.id.ui_duration_text);
-        TextView perText = (TextView) layout.findViewById(R.id.ui_percentage_text);
-        ProgressBar bar = (ProgressBar) layout.findViewById(R.id.ui_bar);
-
-        // modify the row
-        freqText.setText(sFreq);
-        perText.setText(sPer);
-        durText.setText(sDur);
-        bar.setProgress(Math.round(per));
-
-        // add it to parent and return
-        parent.addView(layout);
-
-        if (Utils.isTV(getActivity())) {
-            layout.setFocusable(true);
-            layout.setFocusableInTouchMode(true);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                TypedArray ta = getActivity().obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
-                Drawable d = ta.getDrawable(0);
-                ta.recycle();
-                layout.setBackground(d);
-            }
-        }
-    }
-
-    /**
-     * Keep updating the state data off the UI thread for slow devices
-     */
-    private class RefreshStateDataTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            refreshLayout.setRefreshing(true);
-        }
-
-        /**
-         * Stuff to do on a separate thread
-         */
-        @Override
-        protected Void doInBackground(Void... v) {
+        for (int i = 0; i < CPU.getCoreCount(); i++) {
+            Log.d(TAG, "Reading core "+i);
+            // <Freq, time>
+            double total_time = 0;
+            Map<String, String> freq_use_list = new HashMap<>();
             try {
-                cpuSpyApp.getCpuStateMonitor().updateStates();
-            } catch (CpuStateMonitor.CpuStateMonitorException e) {
-                Log.e(TAG, "FrequencyTable: Problem getting CPU states");
+                FileInputStream fileInputStream = new FileInputStream(Utils.getsysfspath(CPU_TIME_IN_STATE_ARRAY, i));
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+                BufferedReader buffreader = new BufferedReader(inputStreamReader);
+                if (buffreader != null ) {
+                    String line;
+                    String[] linePieces;
+                    while ((line = buffreader.readLine()) != null) {
+                        Log.d(TAG, "Line = "+line);
+                        linePieces = line.split(" ");
+                        total_time = total_time + Integer.parseInt(linePieces[1]);
+                        freq_use_list.put(linePieces[0], linePieces[1]);
+                    }
+                    fileInputStream.close();
+                    inputStreamReader.close();
+                    buffreader.close();
+                }
+            } catch (Exception ex) {
+                // I don't really care about this exception...
+                Log.w(TAG, "Yes you do! ");
+                ex.printStackTrace();
             }
-            if (cpuSpyAppLITTLE != null) {
-                try {
-                    cpuSpyAppLITTLE.getCpuStateMonitor().updateStates();
-                } catch (CpuStateMonitor.CpuStateMonitorException e) {
-                    Log.e(TAG, "FrequencyTable: Problem getting CPU LITTLE states");
+            List<Integer> allfreqs = CPU.getFreqs();
+
+            String unused_states = "";
+
+            LinearLayout uiStatesView = new LinearLayout(getActivity());
+            uiStatesView.setOrientation(LinearLayout.VERTICAL);
+            CardViewItem.DCardView frequencyCard = new CardViewItem.DCardView();
+            frequencyCard.setTitle("Core: " + i + " - Time in States.  (Online: " + getDurationBreakdown((long)total_time * 10) + ")");
+            frequencyCard.setView(uiStatesView);
+            frequencyCard.setFullSpan(true);
+            for (int x = 0; x < freq_use_list.size(); x++) {
+                double freq_time = (double)Utils.stringToInt(freq_use_list.get(Integer.toString(allfreqs.get(x))));
+                double pct = Math.round(freq_time / total_time * 100);
+                //Limit the freqs shown to only anything with at least 1% use
+                if (pct >= 1) {
+                    LinearLayout layout = (LinearLayout) LayoutInflater.from(getActivity())
+                            .inflate(R.layout.state_row, uiStatesView, false);
+
+                    // map UI elements to objects
+                    TextView freqText = (TextView) layout.findViewById(R.id.ui_freq_text);
+                    TextView durText = (TextView) layout.findViewById(R.id.ui_duration_text);
+                    TextView perText = (TextView) layout.findViewById(R.id.ui_percentage_text);
+                    ProgressBar bar = (ProgressBar) layout.findViewById(R.id.ui_bar);
+
+                    // modify the row
+                    freqText.setText(allfreqs.get(x) / 1000 + "Mhz");
+                    perText.setText(pct + "%");
+                    // Multiple the time_in_state time value by 10 as it is stored in UserTime Units (10ms)
+                    durText.setText(getDurationBreakdown((Utils.stringToLong(freq_use_list.get(Integer.toString(allfreqs.get(x)))) * 10)));
+                    bar.setProgress((int)pct);
+
+                    uiStatesView.addView(layout);
+                } else {
+                    unused_states = unused_states + (allfreqs.get(x)/ 1000 + "MHZ, ");
                 }
             }
-            return null;
+            addView(frequencyCard);
+            if (!unused_states.isEmpty()) {
+                CardViewItem.DCardView mUnUsedStatesCard = new CardViewItem.DCardView();
+                mUnUsedStatesCard.setTitle("Core: " + i + " Unused States: (<1%)");
+                mUnUsedStatesCard.setDescription(unused_states.substring(0, unused_states.length()-2));
+                addView(mUnUsedStatesCard);
+            }
         }
 
-        /**
-         * Executed on UI thread after task
-         */
-        @Override
-        protected void onPostExecute(Void v) {
-            updateView();
-            refreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * Convert a millisecond duration to a string format
+     *
+     * @param millis A duration to convert to a string form
+     * @return A string of the form "X Days Y Hours Z Minutes A Seconds".
+     *
+     * Function modified from answer here: http://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
+     */
+    public static String getDurationBreakdown(long millis)
+    {
+        if(millis < 0)
+        {
+            throw new IllegalArgumentException("Duration must be greater than zero!");
         }
+
+        long days = TimeUnit.MILLISECONDS.toDays(millis);
+        millis -= TimeUnit.DAYS.toMillis(days);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        millis -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+        millis -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+
+        StringBuilder sb = new StringBuilder(64);
+        if (days > 0 ) {
+            sb.append(days);
+            sb.append("D ");
+        }
+        if (hours > 0) {
+            sb.append(hours);
+            sb.append("H ");
+        }
+        if (minutes > 0 ) {
+            sb.append(minutes);
+            sb.append("M ");
+        }
+        if (seconds > 0) {
+            sb.append(seconds);
+            sb.append("S ");
+        }
+
+        return(sb.toString());
     }
 
 }

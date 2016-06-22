@@ -18,6 +18,7 @@ package com.grarak.kerneladiutor.utils.kernel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.grarak.kerneladiutor.utils.Constants;
 import com.grarak.kerneladiutor.utils.Utils;
@@ -25,6 +26,7 @@ import com.grarak.kerneladiutor.utils.root.Control;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -134,12 +136,20 @@ public class CPUVoltage implements Constants {
             }
             return new ArrayList<>(Arrays.asList(voltages));
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public static List<String> getFreqs() {
+
         if (mCpuFreqs == null) {
+
+            if(CPU_VOLTAGE_FILE == null){
+                Log.e(TAG, "CPU_VOLTAGE_FILE is null ??");
+                return Collections.emptyList();
+            }
+
             String value = Utils.readFile(CPU_VOLTAGE_FILE);
+
             if (value != null) {
                 String[] lines;
                 value = value.replace(" ", "");
@@ -165,9 +175,10 @@ public class CPUVoltage implements Constants {
                     }
                 }
             }
+            return new ArrayList<>(Arrays.asList(mCpuFreqs));
+        } else {
+            return new ArrayList<>(Arrays.asList(mCpuFreqs));
         }
-        if (mCpuFreqs == null) return null;
-        return new ArrayList<>(Arrays.asList(mCpuFreqs));
     }
 
     public static boolean isVddVoltage() {
@@ -185,19 +196,21 @@ public class CPUVoltage implements Constants {
 
     public static boolean storeVoltageTable (Context context) {
         // Have to call this function to pre-load variables
-        hasCpuVoltage();
+        if(hasCpuVoltage()){
+            List<String> freqs = CPUVoltage.getFreqs();
+            List<String> voltages = CPUVoltage.getVoltages();
 
-        List<String> freqs = CPUVoltage.getFreqs();
-        List<String> voltages = CPUVoltage.getVoltages();
-
-        // Store Kernel's Stock Freq/Voltage table
-        SharedPreferences.Editor preferences = context.getSharedPreferences("voltage_table", 0).edit();
-        for (int i = 0; i < freqs.size(); i++) {
-            preferences.putString(freqs.get(i), voltages.get(i));
+            // Store Kernel's Stock Freq/Voltage table
+            SharedPreferences.Editor preferences = context.getSharedPreferences("voltage_table", 0).edit();
+            for (int i = 0; i < freqs.size(); i++) {
+                preferences.putString(freqs.get(i), voltages.get(i));
+            }
+            preferences.apply();
+            return true;
+        } else {
+            Log.w(TAG, "hasCpuVoltage() is false");
+            return false;
         }
-        preferences.commit();
-
-        return true;
     }
 
 

@@ -47,13 +47,14 @@ public abstract class BaseFragment extends Fragment implements MainActivity.OnBa
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
                 try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
                         observer.removeOnGlobalLayoutListener(this);
-                    else observer.removeGlobalOnLayoutListener(this);
+                    } else {
+                        observer.removeGlobalOnLayoutListener(this);
+                    }
 
                     onViewCreated();
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
             }
         });
     }

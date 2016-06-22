@@ -56,6 +56,7 @@ public interface Constants {
     String CPU_AVAILABLE_FREQS = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_available_frequencies";
     String CPU_TIME_STATE = "/sys/devices/system/cpu/cpufreq/stats/cpu%d/time_in_state";
     String CPU_TIME_STATE_2 = "/sys/devices/system/cpu/cpu%d/cpufreq/stats/time_in_state";
+    String[] CPU_TIME_IN_STATE_ARRAY = { CPU_TIME_STATE, CPU_TIME_STATE_2 };
     String CPU_SCALING_GOVERNOR = "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_governor";
     String CPU_AVAILABLE_GOVERNORS = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
 

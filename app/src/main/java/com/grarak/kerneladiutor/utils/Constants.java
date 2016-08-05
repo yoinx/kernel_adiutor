@@ -738,7 +738,7 @@ public interface Constants {
     String FAUX_SOUND = "/sys/kernel/sound_control_3";
     String HEADPHONE_GAIN[] = {"/sys/kernel/sound_control_3/gpl_headphone_gain",
             "/sys/kernel/sound_control_3/gpl_headphone_l_gain"};
-    String HANDSET_MICROPONE_GAIN = "/sys/kernel/sound_control_3/gpl_mic_gain";
+    String HANDSET_MICROPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_mic_gain";
     String CAM_MICROPHONE_GAIN = "/sys/kernel/sound_control_3/gpl_cam_mic_gain";
     String SPEAKER_GAIN = "/sys/kernel/sound_control_3/gpl_speaker_gain";
     String HEADPHONE_POWERAMP_GAIN = "/sys/kernel/sound_control_3/gpl_headphone_pa_gain";
@@ -751,7 +751,7 @@ public interface Constants {
 
     String[] SPEAKER_GAIN_ARRAY = {SPEAKER_GAIN, SPEAKER_BOOST};
 
-    String[][] SOUND_ARRAY = {SPEAKER_GAIN_ARRAY, SOUND_CONTROL_ENABLE, WCD_HIGHPERF_MODE_ENABLE, HEADPHONE_GAIN, {HIGHPERF_MODE_ENABLE, HANDSET_MICROPONE_GAIN,
+    String[][] SOUND_ARRAY = {SPEAKER_GAIN_ARRAY, SOUND_CONTROL_ENABLE, WCD_HIGHPERF_MODE_ENABLE, HEADPHONE_GAIN, {HIGHPERF_MODE_ENABLE, HANDSET_MICROPHONE_GAIN,
             CAM_MICROPHONE_GAIN, HEADPHONE_POWERAMP_GAIN, MIC_BOOST, VOLUME_BOOST, WCD_SPKR_DRV_WRND}};
 
     // Battery

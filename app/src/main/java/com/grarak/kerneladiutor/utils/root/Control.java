@@ -107,6 +107,10 @@ public class Control implements Constants {
         if (context != null) commandSaver(context, service, "stop " + service);
     }
 
+    public static String write(String text, String path) {
+        return "echo '" + text + "' > " + path;
+    }
+
     private static final List<Thread> tasks = new ArrayList<>();
 
     public static void runCommand(final String value, final String file, final CommandType command, final String id,
@@ -186,5 +190,4 @@ public class Control implements Constants {
         }
         commandDB.commit();
     }
-
 }

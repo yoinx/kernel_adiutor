@@ -905,8 +905,6 @@
   <string name="modification">Modifizierte Version von Kernel Adiutor</string>
   <string name="modification_summary">Diese Applikation wurde um verschiedene Features erweitert, die nicht in der Originalversion von Kernel Adiutor enthalten sind.</string>
 
-  <string name="modification_version">Modifizierte Version</string>
-  
   <string name="accessibility_service_label">KA Per-App-Monitor</string>
   <string name="accessibility_service_desc">Dienst zur Überwachung, ob sich eine Vordergrund-App durch das Laden eines Per-App-Profils ändert.</string>
   <string name="smb135x_wakelock_summary">smb135x-Wakelock ist erlaubt. Ausschalten, um dieses Wakelock außerhalb des Ladevorgangs zu verhindern.\n Aktuell: %s.</string>

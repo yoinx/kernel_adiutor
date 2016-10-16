@@ -44,8 +44,7 @@ public class AboutusFragment extends RecyclerViewFragment {
     public void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
 
-        ModififactionInit();
-        ModificationVersionInit();
+        ModificationInit();
         googlePlusInit();
         licenseInit();
         appSourceInit();
@@ -53,20 +52,12 @@ public class AboutusFragment extends RecyclerViewFragment {
         donateInit();
     }
 
-    private void ModififactionInit() {
+    private void ModificationInit() {
             CardViewItem.DCardView mModificationCard = new CardViewItem.DCardView();
             mModificationCard.setTitle(getString(R.string.modification));
             mModificationCard.setDescription(getString(R.string.modification_summary));
 
         addView(mModificationCard);
-        }
-
-    private void ModificationVersionInit() {
-        CardViewItem.DCardView mModificationVersionCard = new CardViewItem.DCardView();
-        mModificationVersionCard.setTitle(getString(R.string.modification_version));
-        mModificationVersionCard.setDescription(getString(R.string.modification_version_number, BuildConfig.VERSION_CODE));
-
-        addView(mModificationVersionCard);
     }
 
     private void googlePlusInit() {

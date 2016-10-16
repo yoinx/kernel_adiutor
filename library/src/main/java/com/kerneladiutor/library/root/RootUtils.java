@@ -16,6 +16,7 @@
 
 package com.kerneladiutor.library.root;
 
+import android.os.Build;
 import android.util.Log;
 
 import com.kerneladiutor.library.Tools;
@@ -78,8 +79,13 @@ public class RootUtils {
     }
 
     public static void mount(boolean writeable, String mountpoint) {
-        runCommand(writeable ? "mount -o remount,rw " + mountpoint + " " + mountpoint :
-                "mount -o remount,ro " + mountpoint + " " + mountpoint);
+        if (Build.VERSION.SDK_INT <= 23) {
+            runCommand(writeable ? "mount -o remount,rw " + mountpoint + " " + mountpoint :
+                    "mount -o remount,ro " + mountpoint + " " + mountpoint);
+        } else {
+            runCommand(writeable ? "mount -o rw,remount -t auto " + mountpoint + " " + mountpoint :
+                    "mount -o ro,remount -t auto " + mountpoint + " " + mountpoint);
+        }
     }
 
     public static void closeSU() {

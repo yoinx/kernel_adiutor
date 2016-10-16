@@ -47,6 +47,9 @@ import com.grarak.kerneladiutor.utils.Utils;
 import com.grarak.kerneladiutor.utils.database.CommandDB;
 import com.grarak.kerneladiutor.utils.root.Control;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,11 +120,17 @@ public class StartUpCommandsFragment extends RecyclerViewFragment {
                                             switch (which) {
                                                 case 0: {
                                                     ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                                                    ClipData clip = ClipData.newPlainText("Startup Comnmand", allcommands);
+                                                    ClipData clip = ClipData.newPlainText("Startup Comnmands Shell", allcommands);
                                                     clipboard.setPrimaryClip(clip);
                                                     break;
                                                 }
                                                 case 1: {
+                                                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                                                    ClipData clip = ClipData.newPlainText("Startup Comnmands RC", convert_to_rc(allcommands));
+                                                    clipboard.setPrimaryClip(clip);
+                                                    break;
+                                                }
+                                                case 2: {
                                                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                                                     builder.setMessage(getString(R.string.startup_commands_delete_all)).setPositiveButton(getString(R.string.startup_commands_delete_all_yes), dialogClickListener)
                                                             .setNegativeButton(getString(R.string.startup_commands_delete_all_no), dialogClickListener).show();
@@ -205,5 +214,42 @@ public class StartUpCommandsFragment extends RecyclerViewFragment {
             }
         }
     };
+
+    private String convert_to_rc(String text) {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader bufReader = new BufferedReader(new StringReader(text));
+        try {
+            String line=null;
+            while ((line = bufReader.readLine()) != null) {
+                String[] tar=null;
+                tar = line.split(" ");
+                    switch (tar[0]) {
+                        case "echo":
+                            sb.append("write ");
+                            sb.append(tar[3]);
+                            sb.append(" ");
+                            sb.append(tar[1]);
+                            sb.append("\n");
+                            break;
+                        case "chmod":
+                            sb.append(tar[0]);
+                            sb.append(" ");
+                            sb.append(tar[1]);
+                            sb.append(" ");
+                            sb.append(tar[2]);
+                            sb.append("\n");
+                            break;
+                        case "start": case "stop":
+                            sb.append(tar[0]);
+                            sb.append(" ");
+                            sb.append(tar[1]);
+                            sb.append("\n");
+                            break;
+                }
+            }
+        } catch (IOException x) {
+        }
+        return sb.toString();
+    }
 
 }

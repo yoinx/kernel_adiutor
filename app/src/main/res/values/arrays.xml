@@ -96,7 +96,8 @@
 
     <!-- Startup Commands -->
     <string-array name="startup_commands_menu">
-        <item>@string/copy</item>
+        <item>@string/copy_as_shell</item>
+        <item>@string/copy_as_rc</item>
         <item>@string/delete</item>
     </string-array>
 

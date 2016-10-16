@@ -25,7 +25,8 @@
     <string name="no_permission">No permission</string>
     <string name="select_file">Select %s?</string>
     <string name="no_files">No files in this path.</string>
-    <string name="copy">Copy</string>
+    <string name="copy_as_shell">Copy as Shell Script</string>
+    <string name="copy_as_rc">Copy as RC Script</string>
 
     <!-- EditText -->
     <string name="save">Save</string>
@@ -994,9 +995,6 @@
 
     <string name="modification">Modified build of Kernel Adiutor</string>
     <string name="modification_summary">This application is being modified for various custom features that are not included in the original Kernel Adiutor.</string>
-
-    <string name="modification_version">Modification Version</string>
-    <string name="modification_version_number" translatable="false">Build %d</string>
 
     <string name="accessibility_service_label">KA Per App Monitor</string>
     <string name="accessibility_service_desc">Service to monitor when foreground app changes for per-app profile loading</string>

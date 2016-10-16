@@ -432,6 +432,9 @@ public class Wake implements Constants {
     }
 
     public static void setDt2w(int value, Context context) {
+        if (DT2W_FILE == LGE_TOUCH_DT2W_PROFILES) {
+            DT2W_FILE = LGE_TOUCH_DT2W;
+        }
         Control.runCommand(String.valueOf(value), DT2W_FILE, Control.CommandType.GENERIC, context);
     }
 
@@ -446,6 +449,7 @@ public class Wake implements Constants {
         if (DT2W_FILE != null) {
             list.add(context.getString(R.string.disabled));
             switch (DT2W_FILE) {
+                case LGE_TOUCH_DT2W_PROFILES:
                 case LGE_TOUCH_CORE_DT2W:
                     list.add(context.getString(R.string.center));
                     list.add(context.getString(R.string.full));

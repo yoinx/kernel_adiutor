@@ -82,7 +82,6 @@ public class BootService extends Service {
 
     private void init() {
         final List<String> applys = new ArrayList<>();
-        final List<String> plugins = new ArrayList<>();
 
         CPUVoltage.storeVoltageTable(this);
 
@@ -103,14 +102,7 @@ public class BootService extends Service {
                 applys.addAll(Utils.getApplys(mClass));
             }
 
-        String plugs;
-        if (!(plugs = Utils.getString("plugins", "", this)).isEmpty()) {
-            String[] ps = plugs.split("wefewfewwgwe");
-            for (String plug : ps)
-                if (Utils.getBoolean(plug + "onboot", false, this)) plugins.add(plug);
-        }
-
-        if (applys.size() > 0 || plugins.size() > 0) {
+        if (applys.size() > 0 ) {
             final int delay = Utils.getInt("applyonbootdelay", 5, this);
             mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             mBuilder = new NotificationCompat.Builder(this);
@@ -143,14 +135,14 @@ public class BootService extends Service {
                         mBuilder.setContentText(getString(R.string.apply_on_boot_finished)).setProgress(0, 0, false);
                         mNotifyManager.notify(id, mBuilder.build());
                     }
-                    apply(applys, plugins);
+                    apply(applys);
                     stopSelf();
                 }
             }).start();
         } else stopSelf();
     }
 
-    private void apply(List<String> applys, List<String> plugins) {
+    private void apply(List<String> applys) {
         boolean hasRoot = false;
         boolean hasBusybox = false;
         if (RootUtils.rooted()) hasRoot = RootUtils.rootAccess();
@@ -185,15 +177,6 @@ public class BootService extends Service {
                             commands.add(command);
                     }
                 }
-
-        if (plugins.size() > 0)
-            for (CommandDB.CommandItem commandItem : allCommands)
-                for (String pluginName : plugins)
-                    if (commandItem.getPath().endsWith(pluginName)) {
-                        String command = commandItem.getCommand();
-                        if (commands.indexOf(command) < 0)
-                            commands.add(command);
-                    }
 
         for (String command : commands) {
             log("run: " + command);

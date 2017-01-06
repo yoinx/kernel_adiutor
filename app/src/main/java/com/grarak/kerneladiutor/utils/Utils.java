@@ -172,6 +172,14 @@ public class Utils implements Constants {
         }
     }
 
+    public static int strToInt(String text) {
+        try {
+            return Integer.parseInt(text);
+        } catch (NumberFormatException ignored) {
+            return 0;
+        }
+    }
+
     public static boolean isRTL(Context context) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
                 && context.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;

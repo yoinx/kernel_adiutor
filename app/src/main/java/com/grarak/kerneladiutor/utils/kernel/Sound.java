@@ -65,11 +65,13 @@ public class Sound implements Constants {
     }
 
     public static void setHeadphonePowerAmpGain(String value, Context context) {
-        Control.runCommand(value + " " + value, HEADPHONE_POWERAMP_GAIN, Control.CommandType.FAUX_GENERIC, context);
+        int newGain = 38 - Utils.strToInt(value);
+        value = String.valueOf(newGain);        
+        fauxRun(value + " " + value, HEADPHONE_POWERAMP_GAIN, HEADPHONE_POWERAMP_GAIN, context);
     }
 
     public static String getCurHeadphonePowerAmpGain() {
-        return Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ")[0];
+        return String.valueOf(38 - Utils.strToInt(Utils.readFile(HEADPHONE_POWERAMP_GAIN).split(" ")[0]));
     }
 
     public static List<String> getHeadphonePowerAmpGainLimits() {
@@ -141,11 +143,11 @@ public class Sound implements Constants {
     }
 
     public static void setHandsetMicrophoneGain(String value, Context context) {
-        Control.runCommand(value, HANDSET_MICROPONE_GAIN, Control.CommandType.FAUX_GENERIC, context);
+        Control.runCommand(value, HANDSET_MICROPHONE_GAIN, Control.CommandType.FAUX_GENERIC, context);
     }
 
     public static String getCurHandsetMicrophoneGain() {
-        return Utils.readFile(HANDSET_MICROPONE_GAIN);
+        return Utils.readFile(HANDSET_MICROPHONE_GAIN);
     }
 
     public static List<String> getHandsetMicrophoneGainLimits() {
@@ -153,7 +155,7 @@ public class Sound implements Constants {
     }
 
     public static boolean hasHandsetMicrophoneGain() {
-        return Utils.existFile(HANDSET_MICROPONE_GAIN);
+        return Utils.existFile(HANDSET_MICROPHONE_GAIN);
     }
 
     public static boolean isIndependentHeadphoneGainEnabled(Context context) {
@@ -268,4 +270,20 @@ public class Sound implements Constants {
         if (Utils.existFile(FAUX_SOUND) || Utils.existFile(FRANCO_SOUND)) return true;
         else return false;
     }
+
+    private static int getChecksum(int arg0, int arg1) {
+        return 0xff & (Integer.MAX_VALUE ^ (arg0 & 0xff) + (arg1 & 0xff));
+    }
+
+    private static void fauxRun(String value, String path, String id, Context context) {
+        int checksum = value.contains(" ") ? getChecksum(Utils.strToInt(value.split(" ")[0]),
+                Utils.strToInt(value.split(" ")[1])) : getChecksum(Utils.strToInt(value), 0);
+        run(Control.write(value + " " + checksum, path), id, context);
+        run(Control.write(value, path), id + "nochecksum", context);
+    }
+
+    private static void run(String command, String id, Context context) {
+	Control.runCommand(command, id, Control.CommandType.GENERIC, context);
+    }
+
 }

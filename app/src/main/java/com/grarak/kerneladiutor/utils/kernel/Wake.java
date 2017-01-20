@@ -432,7 +432,17 @@ public class Wake implements Constants {
     }
 
     public static void setDt2w(int value, Context context) {
-        Control.runCommand(String.valueOf(value), DT2W_FILE, Control.CommandType.GENERIC, context);
+        //we have to consider whether we use DT2W or custom DT2W profiles
+        switch (DT2W_FILE) {
+            case LGE_TOUCH_DT2W_PROFILES:
+                Control.runCommand(String.valueOf(value), DT2W_FILE, Control.CommandType.GENERIC, context);
+                break;
+            case LGE_TOUCH_CORE_DT2W:
+                Control.runCommand(String.valueOf(value), DT2W_FILE, Control.CommandType.GENERIC, context);
+                break;
+            default:
+                break;
+        }
     }
 
     public static int getDt2wValue() {
@@ -446,6 +456,8 @@ public class Wake implements Constants {
         if (DT2W_FILE != null) {
             list.add(context.getString(R.string.disabled));
             switch (DT2W_FILE) {
+                case LGE_TOUCH_DT2W_PROFILES:
+                    //reuse code of LGE_TOUCH_CORE_DT2W as we share the same features 
                 case LGE_TOUCH_CORE_DT2W:
                     list.add(context.getString(R.string.center));
                     list.add(context.getString(R.string.full));

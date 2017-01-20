@@ -635,6 +635,7 @@ public interface Constants {
 
     // DT2W
     String LGE_TOUCH_DT2W = "/sys/devices/virtual/input/lge_touch/dt_wake_enabled";
+    String LGE_TOUCH_DT2W_PROFILES = "/sys/devices/virtual/input/lge_touch/dt_wake_feather";
     String LGE_TOUCH_CORE_DT2W = "/sys/module/lge_touch_core/parameters/doubletap_to_wake";
     String LGE_TOUCH_GESTURE = "/sys/devices/virtual/input/lge_touch/touch_gesture";
     String DT2W = "/sys/android_touch/doubletap2wake";
@@ -645,7 +646,7 @@ public interface Constants {
     String DT2W_WAKE_GESTURE = "/sys/devices/platform/spi-tegra114.2/spi_master/spi2/spi2.0/input/input0/wake_gesture";
     String DT2W_WAKE_GESTURE_2 = "/sys/devices/soc.0/f9924000.i2c/i2c-2/2-0070/input/input0/wake_gesture";
 
-    String[] DT2W_ARRAY = {LGE_TOUCH_DT2W, LGE_TOUCH_CORE_DT2W, LGE_TOUCH_GESTURE, DT2W, DT2W_2,
+    String[] DT2W_ARRAY = {LGE_TOUCH_DT2W_PROFILES, LGE_TOUCH_DT2W, LGE_TOUCH_CORE_DT2W, LGE_TOUCH_GESTURE, DT2W, DT2W_2,
             TOUCH_PANEL_DT2W, DT2W_WAKEUP_GESTURE, DT2W_ENABLE, DT2W_WAKE_GESTURE, DT2W_WAKE_GESTURE_2};
 
     // S2W
@@ -722,7 +723,6 @@ public interface Constants {
     String WAKE_DT2W_TIMEBETWEENTAPS = "/sys/android_touch/dt2w_time";
     String WAKE_DT2W_FEATHERX = "/sys/android_touch/dt2w_feather_x";
     String WAKE_DT2W_FEATHERY = "/sys/android_touch/dt2w_feather_y";
-
 
     String[][] WAKE_ARRAY = {DT2W_ARRAY, S2W_ARRY, T2W_ARRAY, WAKE_MISC_ARRAY, SLEEP_MISC_ARRAY,  WAKE_TIMEOUT_ARRAY, DT2S_ARRAY,
             SLEEP_MISC_ARRAY, WAKE_MISC_ARRAY, T2W_ARRAY, POCKET_MODE_ARRAY, GESTURE_CRTL, CAMERA_GESTURE, POWER_KEY_SUSPEND, {LENIENT, POCKET_MODE,

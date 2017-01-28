@@ -868,6 +868,10 @@ public class CPU implements Constants {
                     LITTLEcore = 0;
                 }
             } else if(cores > 3) {
+                // If system has 4 cores and is armV7 assume it is not big.little
+                if (System.getProperty("os.arch").toLowerCase().contains("armv7")) {
+                    return false;
+                }
                 cpu2Freqs = getFreqs(2);
                 if (cpu0Freqs.size() > cpu2Freqs.size()) {
                     bigCore = 0;

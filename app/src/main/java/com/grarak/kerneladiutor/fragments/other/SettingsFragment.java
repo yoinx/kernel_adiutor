@@ -73,12 +73,36 @@ public class SettingsFragment extends RecyclerViewFragment {
             forceenglishlanguageInit();
         if (Constants.VERSION_NAME.contains("beta")) betainfoInit();
         if (Utils.hasCMSDK()) profileTileInit();
+        navigationDrawerInit();
         updatecheckInit();
         applyonbootInit();
         debuggingInit();
         securityInit();
         perappInit();
         showSectionsInit();
+    }
+
+    private void navigationDrawerInit() {
+        DDivider mNavigationDrawerDividerCard = new DDivider();
+        mNavigationDrawerDividerCard.setText(getString(R.string.navigation_drawer));
+
+        addView(mNavigationDrawerDividerCard);
+
+        if (!Utils.isTV(getActivity())) {
+            SwitchCardView.DSwitchCard mNavigationDrawerCard = new SwitchCardView.DSwitchCard();
+            mNavigationDrawerCard.setTitle(getString(R.string.navigation_drawer));
+            mNavigationDrawerCard.setDescription(getString(R.string.navigation_drawer_summary));
+            mNavigationDrawerCard.setChecked(Utils.getBoolean("Navbar_Position_Alternate", false, getActivity()));
+            mNavigationDrawerCard.setOnDSwitchCardListener(new SwitchCardView.DSwitchCard.OnDSwitchCardListener() {
+                @Override
+                public void onChecked(SwitchCardView.DSwitchCard dSwitchCard, boolean checked) {
+                    Utils.saveBoolean("Navbar_Position_Alternate", checked, getActivity());
+                    MainActivity.reconfigureNavigationDrawer(getContext());
+                }
+            });
+
+            addView(mNavigationDrawerCard);
+        }
     }
 
     private void darkthemeInit() {

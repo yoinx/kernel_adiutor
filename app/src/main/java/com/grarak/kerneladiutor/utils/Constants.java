@@ -513,8 +513,8 @@ public interface Constants {
     String SIMPLE_RAMP_THRESHOLD = SIMPLE_GPU_PARAMETERS + "/simple_ramp_threshold";
 
     // Adreno Idler
-    String ADRENO_IDLER_PARAMETERS = "/sys/module/adreno_idler/parameters/";
-    String ADRENO_IDLER_ACTIVATE = ADRENO_IDLER_PARAMETERS + "adreno_idler_active";
+    String ADRENO_IDLER_PARAMETERS = "/sys/module/adreno_idler/parameters";
+    String ADRENO_IDLER_ACTIVATE = ADRENO_IDLER_PARAMETERS + "/adreno_idler_active";
     String ADRENO_IDLER_DOWNDIFFERENTIAL = ADRENO_IDLER_PARAMETERS + "/adreno_idler_downdifferential";
     String ADRENO_IDLER_IDLEWAIT = ADRENO_IDLER_PARAMETERS + "/adreno_idler_idlewait";
     String ADRENO_IDLER_IDLEWORKLOAD = ADRENO_IDLER_PARAMETERS + "/adreno_idler_idleworkload";

@@ -955,6 +955,9 @@
     <string name="per_app_toast_summary">Show a toast when applying a profile for Per App detection</string>
     <string name="update_check">Update Checking</string>
     <string name="update_check_summary">Allow app to check for updates on-boot and on-open.</string>
+    <string name="navigation_drawer">Navigation Drawer</string>
+    <string name="navigation_drawer_summary">Enable to relocate Navigation Drawer to opposite side of the screen.</string>
+
     <!-- FAQ -->
     <string name="misspelled">Why did you misspell \"Auditor\"?</string>
     <string name="misspelled_summary">Adiutor is Latin and means helper.</string>

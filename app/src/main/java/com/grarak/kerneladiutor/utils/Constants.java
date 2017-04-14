@@ -791,10 +791,17 @@ public interface Constants {
 
     // I/O
     String IO_INTERNAL_SCHEDULER = "/sys/block/mmcblk0/queue/scheduler";
+    String IO_INTERNAL_SCHEDULER_SDA = "/sys/block/sda/queue/scheduler";
+    String IO_INTERNAL_SCHEDULER_DM0 = "/sys/block/dm-0/queue/scheduler";
+
     String IO_EXTERNAL_SCHEDULER = "/sys/block/mmcblk1/queue/scheduler";
     String IO_INTERNAL_SCHEDULER_TUNABLE = "/sys/block/mmcblk0/queue/iosched";
+    String IO_INTERNAL_SCHEDULER_TUNABLE_SDA = "/sys/block/sda/queue/iosched";
+    String IO_INTERNAL_SCHEDULER_TUNABLE_DM0 = "/sys/block/dm-0/queue/iosched";
     String IO_EXTERNAL_SCHEDULER_TUNABLE = "/sys/block/mmcblk1/queue/iosched";
     String IO_INTERNAL_READ_AHEAD = "/sys/block/mmcblk0/queue/read_ahead_kb";
+    String IO_INTERNAL_READ_AHEAD_SDA = "/sys/block/sda/queue/read_ahead_kb";
+    String IO_INTERNAL_READ_AHEAD_DM0 = "/sys/block/dm-0/queue/read_ahead_kb";
     String IO_EXTERNAL_READ_AHEAD = "/sys/block/mmcblk1/queue/read_ahead_kb";
 
     String IO_ROTATIONAL = "/sys/block/mmcblk0/queue/rotational";
@@ -802,8 +809,8 @@ public interface Constants {
     String IO_RANDOM = "/sys/block/mmcblk0/queue/add_random";
     String IO_AFFINITY = "/sys/block/mmcblk0/queue/rq_affinity";
 
-    String[] IO_ARRAY = {IO_INTERNAL_SCHEDULER, IO_EXTERNAL_SCHEDULER, IO_INTERNAL_SCHEDULER_TUNABLE,
-            IO_EXTERNAL_SCHEDULER_TUNABLE, IO_INTERNAL_READ_AHEAD, IO_EXTERNAL_READ_AHEAD, IO_ROTATIONAL,
+    String[] IO_ARRAY = {IO_INTERNAL_SCHEDULER, IO_INTERNAL_SCHEDULER_DM0, IO_INTERNAL_SCHEDULER_SDA, IO_EXTERNAL_SCHEDULER, IO_INTERNAL_SCHEDULER_TUNABLE, IO_INTERNAL_SCHEDULER_TUNABLE_DM0, IO_INTERNAL_SCHEDULER_TUNABLE_SDA,
+            IO_EXTERNAL_SCHEDULER_TUNABLE, IO_INTERNAL_READ_AHEAD, IO_INTERNAL_READ_AHEAD_DM0, IO_INTERNAL_READ_AHEAD_SDA, IO_EXTERNAL_READ_AHEAD, IO_ROTATIONAL,
             IO_STATS, IO_RANDOM, IO_AFFINITY };
 
     // Kernel Samepage Merging

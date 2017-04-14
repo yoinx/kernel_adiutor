@@ -33,17 +33,37 @@ import java.util.List;
 public class IO implements Constants {
 
     public enum StorageType {
-        INTERNAL, EXTERNAL
+        INTERNAL, INTERNAL_SDA, INTERNAL_DM0, EXTERNAL
     }
 
     public static void setReadahead(StorageType type, int readahead, Context context) {
-        Control.runCommand(String.valueOf(readahead), type == StorageType.INTERNAL ? IO_INTERNAL_READ_AHEAD :
-                IO_EXTERNAL_READ_AHEAD, Control.CommandType.GENERIC, context);
+        String file;
+
+        if (type == StorageType.INTERNAL)
+            file = IO_INTERNAL_READ_AHEAD;
+        else if (type == StorageType.INTERNAL_DM0)
+            file = IO_INTERNAL_READ_AHEAD_DM0;
+        else if (type == StorageType.INTERNAL_SDA)
+            file = IO_INTERNAL_READ_AHEAD_SDA;
+        else
+            file = IO_EXTERNAL_READ_AHEAD;
+
+        if (file != null)
+            Control.runCommand(String.valueOf(readahead), file, Control.CommandType.GENERIC, context);
     }
 
     public static int getReadahead(StorageType type) {
-        String file = type == StorageType.INTERNAL ? IO_INTERNAL_READ_AHEAD
-                : IO_EXTERNAL_READ_AHEAD;
+        String file;
+
+        if (type == StorageType.INTERNAL)
+            file = IO_INTERNAL_READ_AHEAD;
+        else if (type == StorageType.INTERNAL_DM0)
+            file = IO_INTERNAL_READ_AHEAD_DM0;
+        else if (type == StorageType.INTERNAL_SDA)
+            file = IO_INTERNAL_READ_AHEAD_SDA;
+        else
+            file = IO_EXTERNAL_READ_AHEAD;
+
         if (Utils.existFile(file)) {
             String values = Utils.readFile(file);
             if (values != null) return Utils.stringToInt(values);
@@ -52,13 +72,33 @@ public class IO implements Constants {
     }
 
     public static void setScheduler(StorageType type, String scheduler, Context context) {
-        Control.runCommand(scheduler, type == StorageType.INTERNAL ? IO_INTERNAL_SCHEDULER :
-                IO_EXTERNAL_SCHEDULER, Control.CommandType.GENERIC, context);
+        String file;
+
+        if (type == StorageType.INTERNAL)
+            file = IO_INTERNAL_SCHEDULER;
+        else if (type == StorageType.INTERNAL_DM0)
+            file = IO_INTERNAL_SCHEDULER_DM0;
+        else if (type == StorageType.INTERNAL_SDA)
+            file = IO_INTERNAL_SCHEDULER_SDA;
+        else
+            file = IO_EXTERNAL_SCHEDULER;
+
+        if (file != null)
+            Control.runCommand(scheduler, file, Control.CommandType.GENERIC, context);
     }
 
     public static List<String> getSchedulers(StorageType type) {
-        String file = type == StorageType.INTERNAL ? IO_INTERNAL_SCHEDULER
-                : IO_EXTERNAL_SCHEDULER;
+        String file;
+
+        if (type == StorageType.INTERNAL)
+            file = IO_INTERNAL_SCHEDULER;
+        else if (type == StorageType.INTERNAL_DM0)
+            file = IO_INTERNAL_SCHEDULER_DM0;
+        else if (type == StorageType.INTERNAL_SDA)
+            file = IO_INTERNAL_SCHEDULER_SDA;
+        else
+            file = IO_EXTERNAL_SCHEDULER;
+
         if (Utils.existFile(file)) {
             String values = Utils.readFile(file);
             if (values != null) {
@@ -75,8 +115,17 @@ public class IO implements Constants {
     }
 
     public static String getScheduler(StorageType type) {
-        String file = type == StorageType.INTERNAL ? IO_INTERNAL_SCHEDULER
-                : IO_EXTERNAL_SCHEDULER;
+        String file;
+
+        if (type == StorageType.INTERNAL)
+            file = IO_INTERNAL_SCHEDULER;
+        else if (type == StorageType.INTERNAL_DM0)
+            file = IO_INTERNAL_SCHEDULER_DM0;
+        else if (type == StorageType.INTERNAL_SDA)
+            file = IO_INTERNAL_SCHEDULER_SDA;
+        else
+            file = IO_EXTERNAL_SCHEDULER;
+
         if (Utils.existFile(file)) {
             String values = Utils.readFile(file);
             if (values != null) {

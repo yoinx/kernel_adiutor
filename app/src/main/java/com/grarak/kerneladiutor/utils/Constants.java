@@ -907,6 +907,7 @@ public interface Constants {
 
     // Vibration
     String[] VIBRATION_ARRAY = {
+            "/sys/devices/virtual/timed_output/vibrator/vib_strength",
             "/sys/module/qpnp_vibrator/parameters/vib_voltage",
             "/sys/vibrator/pwmvalue",
             "/sys/class/timed_output/vibrator/amp",

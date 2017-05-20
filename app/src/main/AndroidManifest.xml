@@ -100,6 +100,16 @@
                 android:resource="@xml/hbm_widget" />
         </receiver>
 
+        <service
+            android:name=".services.HBMQSTileService"
+            android:icon="@drawable/ic_high_brightness_off"
+            android:label="@string/hbm_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <!-- DashClock -->
         <service
             android:name=".services.DashClockService"

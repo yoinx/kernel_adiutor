@@ -1,11 +1,13 @@
 package com.grarak.kerneladiutor.services;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -86,9 +88,11 @@ public class HBMWidget extends AppWidgetProvider {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.hbm_widget_layout);
         ComponentName thisWidget = new ComponentName(context, HBMWidget.class);
         if (active) {
-            remoteViews.setImageViewResource(R.id.imageView, R.drawable.hbm_enable_ic);
+            remoteViews.setImageViewResource(R.id.imageView, R.drawable.ic_high_brightness_on);
+            remoteViews.setInt(R.id.imageView, "setColorFilter", ContextCompat.getColor(context, R.color.hbm_widget_enabled));
         } else {
-            remoteViews.setImageViewResource(R.id.imageView, R.drawable.hbm_disable_ic);
+            remoteViews.setImageViewResource(R.id.imageView, R.drawable.ic_high_brightness_off);
+            remoteViews.setInt(R.id.imageView, "setColorFilter", ContextCompat.getColor(context, R.color.hbm_widget_disabled));
         }
         appWidgetManager.updateAppWidget(thisWidget, remoteViews);
     }

@@ -26,7 +26,7 @@
         android:scaleX="0.100000"
         android:scaleY="-0.100000">
         <path
-            android:fillColor="#4DFFFFFF"
+            android:fillColor="#FFFFFFFF"
             android:strokeWidth="1"
             android:pathData="M222 425 c-13 -29 -21 -31 -48 -10 -28 21 -34 18 -34 -15 0 -28 -3 -30 -35 -30 -33
 0 -34 -1 -25 -26 15 -37 13 -41 -22 -48 l-31 -6 23 -25 23 -25 -23 -25 -23 -25 32
@@ -38,7 +38,7 @@
 -11 -18 -25z m94 -81 c28 -19 54 -72 54 -111 0 -62 -64 -123 -130 -123 -66 0 -130
 61 -130 123 0 59 42 116 95 130 29 8 84 -2 111 -19z" />
         <path
-            android:fillColor="#4DFFFFFF"
+            android:fillColor="#FFFFFFFF"
             android:strokeWidth="1"
             android:pathData="M177 320 c-38 -30 -52 -80 -33 -123 15 -37 59 -67 96 -67 37 0 81 30 96 67 29 68
 -21 143 -96 143 -22 0 -48 -8 -63 -20z" />

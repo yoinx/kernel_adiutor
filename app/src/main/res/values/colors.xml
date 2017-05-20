@@ -19,7 +19,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="hbm_widget_enabled">#fbff00</color>
-    <color name="hbm_widget_disabled">#4d4d4d</color>
+    <color name="hbm_widget_disabled">#696868</color>
 
     <color name="profile_list_text">@color/white</color>
     <color name="profile_list_background">#E6303030</color>

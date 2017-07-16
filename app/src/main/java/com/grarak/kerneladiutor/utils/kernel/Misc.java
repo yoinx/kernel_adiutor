@@ -304,6 +304,9 @@ public class Misc implements Constants {
                 return VIBRATION_MIN;
             }
 
+            if (VIBRATION_PATH.equals("/sys/devices/virtual/timed_output/vibrator/vib_strength"))
+                return 0;
+
             for (int i = 0; i < VIBRATION_ARRAY.length; i++)
                 if (VIBRATION_PATH.equals(VIBRATION_ARRAY[i]))
                     VIBRATION_MIN = VIBRATION_MAX_MIN_ARRAY[i][1];
@@ -324,6 +327,9 @@ public class Misc implements Constants {
                 VIBRATION_MAX = Utils.stringToInt(Utils.readFile("/sys/class/timed_output/vibrator/pwm_max"));
                 return VIBRATION_MAX;
             }
+
+            if (VIBRATION_PATH.equals("/sys/devices/virtual/timed_output/vibrator/vib_strength"))
+                return 100;
 
             for (int i = 0; i < VIBRATION_ARRAY.length; i++)
                 if (VIBRATION_PATH.equals(VIBRATION_ARRAY[i]))

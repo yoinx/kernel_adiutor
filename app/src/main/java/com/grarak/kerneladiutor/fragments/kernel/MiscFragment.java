@@ -101,7 +101,10 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
 
         mVibrationCard = new SeekBarCardView.DSeekBarCard(list);
         mVibrationCard.setTitle(getString(R.string.vibration_strength));
-        mVibrationCard.setProgress(Math.round((Misc.getCurVibration() - min) / offset));
+        if ((max - min) == 100)
+            mVibrationCard.setProgress(Misc.getCurVibration());
+        else
+            mVibrationCard.setProgress(Math.round((Misc.getCurVibration() - min) / offset));
         mVibrationCard.setOnDSeekBarCardListener(this);
 
         addView(mVibrationCard);
@@ -290,7 +293,11 @@ public class MiscFragment extends RecyclerViewFragment implements PopupCardView.
             int max = Misc.getVibrationMax();
             int min = Misc.getVibrationMin();
             float offset = (max - min) / (float) 101;
-            Misc.setVibration(Math.round(offset * position) + min, getActivity());
+
+            if ((max - min) == 100)
+                Misc.setVibration(position, getActivity());
+            else
+                Misc.setVibration(Math.round(offset * position) + min, getActivity());
 
             // Vibrate
             new Thread(new Runnable() {

@@ -443,15 +443,15 @@ public class Thermal implements Constants {
     }
 
     public static void activateIntelliThermal(boolean active, Context context) {
-        Control.runCommand(active ? "Y" : "N", getThermalFile(PARAMETERS_ENABLED), Control.CommandType.GENERIC, context);
+        Control.runCommand(active ? "Y" : "N", getThermalFile(PARAMETERS_INTELLI_ENABLED), Control.CommandType.GENERIC, context);
     }
 
     public static boolean isIntelliThermalActive() {
-        return Utils.readFile(getThermalFile(PARAMETERS_ENABLED)).equals("Y");
+        return Utils.readFile(getThermalFile(PARAMETERS_INTELLI_ENABLED)).equals("Y");
     }
 
     public static boolean hasIntelliThermalEnable() {
-        return Utils.existFile(getThermalFile(PARAMETERS_ENABLED)) && hasCoreLimitTempDegC();
+        return Utils.existFile(getThermalFile(PARAMETERS_INTELLI_ENABLED)) && hasCoreLimitTempDegC();
     }
 
     public static boolean hasThermalSettings() {

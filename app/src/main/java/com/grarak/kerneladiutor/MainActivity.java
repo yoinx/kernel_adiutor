@@ -107,6 +107,7 @@ import com.grarak.kerneladiutor.utils.tools.UpdateChecker;
 import com.kerneladiutor.library.root.RootUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,7 +126,7 @@ public class MainActivity extends BaseActivity implements Constants {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ScrimInsetsFrameLayout mScrimInsetsFrameLayout;
+    private static ScrimInsetsFrameLayout mScrimInsetsFrameLayout;
     private RecyclerView mDrawerList;
     private SplashView mSplashView;
 
@@ -401,6 +402,17 @@ public class MainActivity extends BaseActivity implements Constants {
                 setList();
             }
             check_writeexternalstorage();
+
+            // Create a blank profiles.json to prevent logspam.
+            File file = new File(getFilesDir() + "/profiles.json");
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
             return null;
         }
 
@@ -510,8 +522,7 @@ public class MainActivity extends BaseActivity implements Constants {
     }
 
     /**
-     * A function to calculate the width of the Navigation Drawer
-     * Phones and Tablets have different sizes
+     * A function to set Navigation Drawer Parameters
      *
      * @return the LayoutParams for the Drawer
      */
@@ -526,6 +537,11 @@ public class MainActivity extends BaseActivity implements Constants {
             if (tablet)
                 params.width -= actionBarSize + (35 * getResources().getDisplayMetrics().density);
         } else params.width = tablet ? width / 2 : width - actionBarSize;
+
+        // Allow configuration of the Navigation drawer to the right side rather than the left
+        if (Utils.getBoolean("Navbar_Position_Alternate", false, this)) {
+            params.gravity = Gravity.END;
+        }
 
         return params;
     }
@@ -615,6 +631,19 @@ public class MainActivity extends BaseActivity implements Constants {
                 Log.w(TAG, "update check onSuccess");
             }
         } , getString(R.string.APP_UPDATE_URL));
+    }
+
+    // Helper function to allow dynamic relocation of Navigation Drawer
+    public static void reconfigureNavigationDrawer(Context context) {
+        if (mScrimInsetsFrameLayout != null) {
+            DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mScrimInsetsFrameLayout.getLayoutParams();
+            // Allow configuration of the Navigation drawer to the right side rather than the left
+            if (Utils.getBoolean("Navbar_Position_Alternate", false, context)) {
+                params.gravity = Gravity.END;
+            } else {
+                params.gravity = Gravity.START;
+            }
+        }
     }
 
 }

@@ -945,19 +945,16 @@ public class CPU implements Constants {
     }
 
     private static Usage[] getUsages() {
-        try {
-            RandomAccessFile reader = new RandomAccessFile("/proc/stat", "r");
-            Usage[] usage = new Usage[getCoreCount() + 1];
-            for (int i = 0; i < usage.length; i++)
-                usage[i] = new Usage(reader.readLine());
-            reader.close();
+            String lines = RootUtils.runCommand("cat /proc/stat");
+            int results = getCoreCount() + 1;
+            String[] line = lines.split("\\r?\\n", results);
+            Usage[] usage = new Usage[results];
+            for (int i = 0; i < line.length; i++) {
+
+                usage[i] = new Usage(line[i]);
+
+             }
             return usage;
-        } catch (FileNotFoundException e) {
-            Log.i(TAG, "/proc/stat does not exist");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private static class Usage {

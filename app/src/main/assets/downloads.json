@@ -191,4 +191,13 @@
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/jalebi.json"
   }
+  {
+    "vendor": [
+      "huawei"
+    ],
+    "device": [
+      "Angler"
+    ],
+    "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/Angler.json"    
+  }
 ]

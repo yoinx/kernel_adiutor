@@ -1,8 +1,9 @@
-This project is currently inactive.
+This project Is Currently Under-Development
+I Have Taken Over This Project To Update It And Make It Work With Newer Kernels.
 
 # KernelAdiutor
 
-[![Build Status](https://travis-ci.org/yoinx/kernel_adiutor.svg?branch=master)](https://travis-ci.org/yoinx/kernel_adiutor)
+[![Build Status](https://travis-ci.org/AliHaide001/kernel_adiutor.svg?branch=master)](https://travis-ci.org/AliHaide001/kernel_adiutor)
 
 ![Screenshot](https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/screenshots/screenshot.png)
 
@@ -12,7 +13,7 @@ This is a feature which allows the user to download different custom kernels for
 
 ## Report a bug or request a feature
 
-You can report a bug or request a feature by [opening an issue](https://github.com/yoinx/kernel_adiutor/issues/new).
+You can report a bug or request a feature by [opening an issue](https://github.com/AliHaide001/kernel_adiutor/issues/new).
 
 #### How to report a bug
 * A detailed description of the bug
@@ -32,7 +33,7 @@ You can report a bug or request a feature by [opening an issue](https://github.c
 Clone the project and come in:
 
 ``` bash
-$ git clone git://github.com/yoinx/kernel_adiutor.git
+$ git clone git://github.com/AliHaide001/kernel_adiutor.git
 $ cd KernelAdiutor
 $ ./gradlew build
 ```

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.grarak.kerneladiutor">
+    package="com.kerneladiutormod.reborn">
 
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -31,7 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
         <activity
-            android:name=".MainActivity"
+            android:name="com.kerneladiutormod.reborn.MainActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,39 +42,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TextActivity"
+            android:name="com.kerneladiutormod.reborn.TextActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation"
             android:theme="@style/AppThemeActionBarLight" />
         <activity
-            android:name=".KernelActivity"
+            android:name="com.kerneladiutormod.reborn.KernelActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation" />
         <activity
-            android:name=".FileBrowserActivity"
+            android:name="com.kerneladiutormod.reborn.FileBrowserActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation" />
         <activity
-            android:name=".EditTextActivity"
+            android:name="com.kerneladiutormod.reborn.EditTextActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation" />
         <activity
-            android:name=".elements.DAdapter$MainHeader$MainHeaderActivity"
+            android:name="com.kerneladiutormod.reborn.elements.DAdapter$MainHeader$MainHeaderActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".utils.GetPermission$PermissionActivity"
+            android:name="com.kerneladiutormod.reborn.utils.GetPermission$PermissionActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <receiver android:name=".services.BootReceiver">
+        <receiver android:name="com.kerneladiutormod.reborn.services.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".services.BootService" />
-        <service android:name=".services.InitdService" />
-        <service android:name=".services.AutoHighBrightnessModeService" />
+        <service android:name="com.kerneladiutormod.reborn.services.BootService" />
+        <service android:name="com.kerneladiutormod.reborn.services.InitdService" />
+        <service android:name="com.kerneladiutormod.reborn.services.AutoHighBrightnessModeService" />
 
         <!-- Profile Widget -->
-        <receiver android:name=".services.ProfileWidget">
+        <receiver android:name="com.kerneladiutormod.reborn.services.ProfileWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -85,11 +85,11 @@
         </receiver>
 
         <service
-            android:name=".services.ProfileWidget$WidgetService"
+            android:name="com.kerneladiutormod.reborn.services.ProfileWidget$WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <!-- HBM Widget -->
-        <receiver android:name=".services.HBMWidget">
+        <receiver android:name="com.kerneladiutormod.reborn.services.HBMWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.kerneladiutor.mod.action.TOGGLE_HBM" />
@@ -100,9 +100,21 @@
                 android:resource="@xml/hbm_widget" />
         </receiver>
 
+		<service
+            android:name="com.kerneladiutormod.reborn.services.HBMQSTileService"
+            android:icon="@drawable/ic_high_brightness_off"
+            android:label="@string/hbm_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+			<meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+			android:value="true" />
+        </service>
+
         <!-- DashClock -->
         <service
-            android:name=".services.DashClockService"
+            android:name="com.kerneladiutormod.reborn.services.DashClockService"
             android:icon="@drawable/ic_launcher_preview"
             android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
             <intent-filter>
@@ -116,7 +128,7 @@
 
         <!-- Tasker -->
         <activity
-            android:name=".tasker.AddProfileActivity"
+            android:name="com.kerneladiutormod.reborn.tasker.AddProfileActivity"
             android:configChanges="locale|keyboard|keyboardHidden|orientation|screenSize|navigation">
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
@@ -124,7 +136,7 @@
         </activity>
 
         <receiver
-            android:name=".tasker.RunProfileReceiver"
+            android:name="com.kerneladiutormod.reborn.tasker.RunProfileReceiver"
             android:process=":background">
 
             <intent-filter>
@@ -133,13 +145,13 @@
         </receiver>
 
         <!-- CM SDK -->
-        <receiver android:name=".services.ProfileTileReceiver">
+        <receiver android:name="com.kerneladiutormod.reborn.services.ProfileTileReceiver">
             <intent-filter>
                 <action android:name="com.kerneladiutor.mod.action.ACTION_TOGGLE_STATE" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".services.HighBrightnessModeReceiver">
+        <receiver android:name="com.kerneladiutormod.reborn.services.HighBrightnessModeReceiver">
             <intent-filter>
                 <action android:name="com.kerneladiutor.mod.action.HBM_ON" />
                 <action android:name="com.kerneladiutor.mod.action.HBM_OFF" />
@@ -147,7 +159,7 @@
         </receiver>
 
         <service
-            android:name=".services.PerAppMonitor"
+            android:name="com.kerneladiutormod.reborn.services.PerAppMonitor"
             android:label="@string/accessibility_service_label"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
             <intent-filter>
@@ -161,7 +173,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.grarak.kerneladiutor.fileprovider"
+            android:authorities="com.kerneladiutormod.reborn.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data

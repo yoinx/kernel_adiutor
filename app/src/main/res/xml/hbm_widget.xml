@@ -3,7 +3,7 @@
     android:minWidth="40dp"
     android:minHeight="40dp"
     android:initialLayout="@layout/hbm_widget_layout"
-    android:previewImage="@drawable/hbm_widget_preview"
+    android:previewImage="@drawable/ic_high_brightness_on"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0" >
 </appwidget-provider>

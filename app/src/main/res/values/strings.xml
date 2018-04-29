@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="app_name">Kernel Adiutor-Mod</string>
+    <string name="app_name">KA-Mod Reborn</string>
     <string name="root_waiting">Waiting for root access</string>
     <string name="no_root">No root available</string>
     <string name="no_busybox">No busybox or toybox available</string>
@@ -20,6 +20,7 @@
     <string name="heavy_user_message">It seems like your are really enjoying this application! Thank you for using it!</string>
     <string name="rate_app">Rate the app</string>
     <string name="donate">Donate to me</string>
+	<string name="hbm_tile">HBM</string>
 
     <!-- FileBrowser -->
     <string name="no_permission">No permission</string>
@@ -78,6 +79,7 @@
     <string name="wake_controls">Wake Controls</string>
     <string name="sound">Sound</string>
     <string name="battery">Power and Battery</string>
+    <string name="battery_charging_current">Battery Charging Current[unsure]</string>
     <string name="io_scheduler">I/O Scheduler</string>
     <string name="ksm">Kernel Samepage Merging</string>
     <string name="low_memory_killer">Low Memory Killer</string>
@@ -823,7 +825,7 @@
     <string name="no_plugins">No plugins found</string>
     <string name="installed">Installed</string>
     <string name="update_available">Update available</string>
-    <string name="update_available_open_app">Open Kernel Adiutor-Mod to download</string>
+    <string name="update_available_open_app">Open Kernel Adiutor-Mod Reborn to download</string>
     <string name="not_installed">Not installed</string>
 
     <!-- Downloads -->
@@ -985,18 +987,21 @@
     <string name="materialtabs" translatable="false">MaterialTabs</string>
     <string name="frenn" translatable="false">Karim Frenn</string>
     <string name="open_source">Open source</string>
-    <string name="open_source_summary">This application is open source. Check it out on my GitHub!</string>
-    <string name="google_plus_community">Google Plus Community</string>
-    <string name="google_plus_community_summary">This project is now also on Google+. Click here to visit the community.</string>
-    <string name="feature_request">Feature request</string>
+    <string name="open_source_summary">This Application Is Open-Source. Check It Out On My GitHub!</string>
+    <string name="telegram_group">Telegram Group</string>
+    <string name="telegram_group_summary">You Can Join This Group For Beta Testing. Click Here To Join The Group.</string>
+    <string name="xda_thread">XDA Thread</string>
+    <string name="xda_thread_summary">Official Thread Of KA-Mod Reborn. Click Here To Visit.</string>
+    <string name="feature_request">Feature Request</string>
     <string name="feature_request_summary">Do you want more features? Open a new issue on GitHub and submit your idea.</string>
-    <string name="donate_summary">This is a donation link for Yoinx for the modifications. Not to Grarak the original author. This button is the only place for a donation to me, all other donation popups will still go to Grarak</string>
     <string name="google_plus_summary">Join our community.</string>
     <string name="translation">Translation</string>
     <string name="translation_summary">Help me translate this app!</string>
 
-    <string name="modification">Modified build of Kernel Adiutor</string>
-    <string name="modification_summary">This application is being modified for various custom features that are not included in the original Kernel Adiutor.</string>
+    <string name="modification">Reborn Build Of Kernel Adiutor Mod</string>
+    <string name="modification_summary">This Application Is Being Modified/Updated For Various Custom Features/Fixes That Are Not Included In The Kernel Adiutor Mod.</string>
+    <string name="modification_version">Modification Version</string>
+    <string name="modification_version_number" translatable="false">Build %d</string>
 
     <string name="accessibility_service_label">KA Per App Monitor</string>
     <string name="accessibility_service_desc">Service to monitor when foreground app changes for per-app profile loading</string>

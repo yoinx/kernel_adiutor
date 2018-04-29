@@ -16,14 +16,15 @@ repositories {
 
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 27
+    buildToolsVersion '26.0.3'
     defaultConfig {
-        applicationId 'com.kerneladiutor.mod'
+        applicationId 'com.kerneladiutormod.reborn'
         minSdkVersion 19
-        targetSdkVersion 23
-        versionCode 15
-        versionName "1.0 build " + getDate()
+        targetSdkVersion 27
+        versionCode 18
+        versionName "1.8 build " + getDate()
+//        multiDexEnabled true
     }
 
     signingConfigs {
@@ -39,13 +40,13 @@ android {
         debug {
             minifyEnabled false
             signingConfig signingConfigs.debug
-            resValue "string", "APP_UPDATE_URL", "https://raw.githubusercontent.com/yoinx/kernel_adiutor/master/download/app/app-debug.json"
+            resValue "string", "APP_UPDATE_URL", "https://raw.githubusercontent.com/AliHaide001/kernel_adiutor/master/download/app/app-debug.json"
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "APP_UPDATE_URL", "https://raw.githubusercontent.com/yoinx/kernel_adiutor/master/download/app/app-release.json"
+            resValue "string", "APP_UPDATE_URL", "https://raw.githubusercontent.com/AliHaide001/kernel_adiutor/master/download/app/app-release.json"
         }
     }
     lintOptions {
@@ -57,21 +58,21 @@ android {
 
 def getDate() {
     def date = new Date()
-    def formattedDate = date.format('MM-dd-yyyy')
+    def formattedDate = date.format('dd-MM-yyyy')
     return formattedDate
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:cardview-v7:26.0.1'
+    compile 'com.android.support:recyclerview-v7:26.0.1'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'io.karim:materialtabs:2.0.3'
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.1'
-    compile 'org.cyanogenmod:platform.sdk:1.0'
+    compile 'org.cyanogenmod:platform.sdk:5.0.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.6@aar') {

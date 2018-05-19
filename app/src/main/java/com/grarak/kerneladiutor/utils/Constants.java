@@ -895,12 +895,19 @@ public interface Constants {
     };
 
     String WLAN_RX_WAKELOCK_DIVIDER = "/sys/module/bcmdhd/parameters/wl_divide";
+    String BCMDHD_CTRL_WAKELOCK_DIVIDER = "/sys/module/bcmdhd/parameters/wlan_ctrl_divide";
+    String BCMDHD_RX_WAKELOCK_DIVIDER = "/sys/module/bcmdhd/parameters/wlan_rx_wake_divide";
     String MSM_HSIC_WAKELOCK_DIVIDER = "/sys/module/xhci_hcd/parameters/wl_divide";
     String BCMDHD_WAKELOCK_DIVIDER = "/sys/module/bcmdhd/parameters/wl_divide";
+    String BCMDHD_WD_WAKE_MULTIPLIER = "/sys/module/bcmdhd/parameters/wlan_wd_wake_multiply";
+    String SYNAPTICS_TS_WAKE_DIVIDER = "/sys/module/synaptics/parameters/ts_wake_lock_divide";
+    String TAF_ADX_RX_WAKE_DIVIDER = "/sys/module/taf/parameters/ads_rx_divide";
 
     String[][] WAKELOCK_ARRAY = {SMB135X_WAKELOCKS, WLAN_RX_WAKELOCKS, WLAN_CTRL_WAKELOCKS, WLAN_WAKELOCKS, {
             SENSOR_IND_WAKELOCK, MSM_HSIC_HOST_WAKELOCK, WLAN_RX_WAKELOCK_DIVIDER,
-            MSM_HSIC_WAKELOCK_DIVIDER, BCMDHD_WAKELOCK_DIVIDER, BLUESLEEP_WAKELOCK}};
+            MSM_HSIC_WAKELOCK_DIVIDER, BCMDHD_WAKELOCK_DIVIDER, BLUESLEEP_WAKELOCK, 
+            BCMDHD_WD_WAKE_MULTIPLIER, SYNAPTICS_TS_WAKE_DIVIDER, TAF_ADX_RX_WAKE_DIVIDER,
+            BCMDHD_CTRL_WAKELOCK_DIVIDER, BCMDHD_RX_WAKELOCK_DIVIDER}};
 
 
     // Misc

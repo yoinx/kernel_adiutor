@@ -804,6 +804,11 @@
     <string name="wlan_rx_wakelock_divider">wlan_rx Wakelock Divider</string>
     <string name="msm_hsic_wakelock_divider">msm_hsic Wakelock Divider</string>
     <string name="bcmdhd_wakelock_divider">BCMDHD Wakelock Divider</string>
+    <string name="bcmdhd_wd_wakelock_multiplier">BCMDHD Watchdog Timer Multiplier</string>
+    <string name="bcmdhd_rx_wakelock_divider">BCMDHD RX Wakelock Divider</string>
+    <string name="bcmdhd_ctrl_wakelock_divider">BCMDHD Ctrl Wakelock Divider</string>
+    <string name="taf_rx_wakelock_divider">TAF Modem TX Wakelock Divider</string>
+    <string name="synaptics_ts_wakelock_divider">Synaptics Touchscreen Wakelock Divider</string>
     <string name="cstates">Krait C-States Settings</string>
     <string name="c0state">C0 (WFI)</string>
     <string name="c0state_summary">Shallowest Sleep with instant wake up.</string>

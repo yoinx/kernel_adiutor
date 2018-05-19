@@ -37,7 +37,7 @@ public class WakeLockFragment extends RecyclerViewFragment implements SeekBarCar
 
     private SwitchCardView.DSwitchCard mSmb135xWakeLockCard, mBlueSleepWakeLockCard, mSensorIndWakeLockCard, mMsmHsicHostWakeLockCard;
     private SwitchCardView.DSwitchCard mWlanrxWakelockCard, mWlanctrlWakelockCard, mWlanWakelockCard;
-    private SeekBarCardView.DSeekBarCard mWlanrxWakelockDividerCard, mMsmHsicWakelockDividerCard, mBCMDHDWakelockDividerCard;
+    private SeekBarCardView.DSeekBarCard mWlanrxWakelockDividerCard, mMsmHsicWakelockDividerCard, mBCMDHDWakelockDividerCard, mBCMDHDCtrlWakelockDividerCard, mBCMDHDRXWakelockDividerCard, mTAFAdxRXWakelockDividerCard, mSynapticsTsWakelockDividerCard, mBCMDHDWdWakelockMultiplierCard;
     
 
     public void init(Bundle savedInstanceState) {
@@ -145,6 +145,66 @@ public class WakeLockFragment extends RecyclerViewFragment implements SeekBarCar
             views.add(mWlanrxWakelockDividerCard);
         }
 
+        if (WakeLock.hasBCMDHDWdWakelockMultiplier()) {
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i < 9; i++) list.add(String.valueOf(i));
+
+            mBCMDHDWdWakelockMultiplierCard = new SeekBarCardView.DSeekBarCard(list);
+            mBCMDHDWdWakelockMultiplierCard.setTitle(getString(R.string.bcmdhd_wd_wakelock_multiplier));
+            mBCMDHDWdWakelockMultiplierCard.setProgress(WakeLock.getBCMDHDWdWakelockMultiplier());
+            mBCMDHDWdWakelockMultiplierCard.setOnDSeekBarCardListener(this);
+
+            views.add(mBCMDHDWdWakelockMultiplierCard);
+        }
+
+        if (WakeLock.hasSynapticsTsWakelockDivider()) {
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i < 9; i++) list.add(String.valueOf(i));
+
+            mSynapticsTsWakelockDividerCard = new SeekBarCardView.DSeekBarCard(list);
+            mSynapticsTsWakelockDividerCard.setTitle(getString(R.string.synaptics_ts_wakelock_divider));
+            mSynapticsTsWakelockDividerCard.setProgress(WakeLock.getSynapticsTsWakelockDivider());
+            mSynapticsTsWakelockDividerCard.setOnDSeekBarCardListener(this);
+
+            views.add(mSynapticsTsWakelockDividerCard);
+        }
+
+        if (WakeLock.hasTAFAdxRXWakelockDivider()) {
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i < 9; i++) list.add(String.valueOf(i));
+
+            mTAFAdxRXWakelockDividerCard = new SeekBarCardView.DSeekBarCard(list);
+            mTAFAdxRXWakelockDividerCard.setTitle(getString(R.string.taf_rx_wakelock_divider));
+            mTAFAdxRXWakelockDividerCard.setProgress(WakeLock.getTAFAdxRXWakelockDivider());
+            mTAFAdxRXWakelockDividerCard.setOnDSeekBarCardListener(this);
+
+            views.add(mTAFAdxRXWakelockDividerCard);
+        }
+
+        if (WakeLock.hasBCMDHDRXWakelockDivider()) {
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i < 9; i++) list.add(String.valueOf(i));
+
+            mBCMDHDRXWakelockDividerCard = new SeekBarCardView.DSeekBarCard(list);
+            mBCMDHDRXWakelockDividerCard.setTitle(getString(R.string.bcmdhd_rx_wakelock_divider));
+            mBCMDHDRXWakelockDividerCard.setProgress(WakeLock.getBCMDHDRXWakelockDivider());
+            mBCMDHDRXWakelockDividerCard.setOnDSeekBarCardListener(this);
+
+            views.add(mBCMDHDRXWakelockDividerCard);
+        }
+
+        if (WakeLock.hasBCMDHDCtrlWakelockDivider()) {
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i < 9; i++) list.add(String.valueOf(i));
+
+            mBCMDHDCtrlWakelockDividerCard = new SeekBarCardView.DSeekBarCard(list);
+            mBCMDHDCtrlWakelockDividerCard.setTitle(getString(R.string.bcmdhd_ctrl_wakelock_divider));
+            mBCMDHDCtrlWakelockDividerCard.setProgress(WakeLock.getBCMDHDCtrlWakelockDivider());
+            mBCMDHDCtrlWakelockDividerCard.setOnDSeekBarCardListener(this);
+
+            views.add(mBCMDHDCtrlWakelockDividerCard);
+        }
+
         if (WakeLock.hasBCMDHDWakelockDivider()) {
             List<String> list = new ArrayList<>();
             for (int i = 1; i < 9; i++) list.add(String.valueOf(i));
@@ -181,6 +241,16 @@ public class WakeLockFragment extends RecyclerViewFragment implements SeekBarCar
             WakeLock.setMsmHsicWakelockDivider(position, getActivity());
         else if (dSeekBarCard == mBCMDHDWakelockDividerCard)
             WakeLock.setBCMDHDWakelockDivider(position, getActivity());
+        else if (dSeekBarCard == mBCMDHDWdWakelockMultiplierCard)
+            WakeLock.setBCMDHDWdWakelockMultiplier(position, getActivity());
+        else if (dSeekBarCard == mSynapticsTsWakelockDividerCard)
+            WakeLock.setSynapticsTsWakelockDivider(position, getActivity());
+        else if (dSeekBarCard == mTAFAdxRXWakelockDividerCard)
+            WakeLock.setTAFAdxRXWakelockDivider(position, getActivity());
+        else if (dSeekBarCard == mBCMDHDRXWakelockDividerCard)
+            WakeLock.setBCMDHDRXWakelockDivider(position, getActivity());
+        else if (dSeekBarCard == mBCMDHDCtrlWakelockDividerCard)
+            WakeLock.setBCMDHDCtrlWakelockDivider(position, getActivity());
 
     }
 

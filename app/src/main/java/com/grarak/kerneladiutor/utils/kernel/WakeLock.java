@@ -206,4 +206,89 @@ public class WakeLock implements Constants {
         return false;
     }
 
+    public static boolean hasBCMDHDWdWakelockMultiplier() {
+        if (Utils.existFile(BCMDHD_WD_WAKE_MULTIPLIER)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void setBCMDHDWdWakelockMultiplier(int value, Context context) {
+        String command = String.valueOf(value + 1);
+        Control.runCommand(command, BCMDHD_WD_WAKE_MULTIPLIER, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getBCMDHDWdWakelockMultiplier() {
+        int value = Utils.stringToInt(Utils.readFile(BCMDHD_WD_WAKE_MULTIPLIER));
+        return value - 1;
+    }
+
+    public static boolean hasSynapticsTsWakelockDivider() {
+        if (Utils.existFile(SYNAPTICS_TS_WAKE_DIVIDER)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void setSynapticsTsWakelockDivider(int value, Context context) {
+        String command = String.valueOf(value + 1);
+        Control.runCommand(command, SYNAPTICS_TS_WAKE_DIVIDER, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getSynapticsTsWakelockDivider() {
+        int value = Utils.stringToInt(Utils.readFile(SYNAPTICS_TS_WAKE_DIVIDER));
+        return value - 1;
+    }    
+
+    public static boolean hasTAFAdxRXWakelockDivider() {
+        if (Utils.existFile(TAF_ADX_RX_WAKE_DIVIDER)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void setTAFAdxRXWakelockDivider(int value, Context context) {
+        String command = String.valueOf(value + 1);
+        Control.runCommand(command, TAF_ADX_RX_WAKE_DIVIDER, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getTAFAdxRXWakelockDivider() {
+        int value = Utils.stringToInt(Utils.readFile(TAF_ADX_RX_WAKE_DIVIDER));
+        return value - 1;
+    }    
+
+    public static boolean hasBCMDHDRXWakelockDivider() {
+        if (Utils.existFile(BCMDHD_RX_WAKELOCK_DIVIDER)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void setBCMDHDRXWakelockDivider(int value, Context context) {
+        String command = String.valueOf(value + 1);
+        Control.runCommand(command, BCMDHD_RX_WAKELOCK_DIVIDER, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getBCMDHDRXWakelockDivider() {
+        int value = Utils.stringToInt(Utils.readFile(BCMDHD_RX_WAKELOCK_DIVIDER));
+        return value - 1;
+    }    
+
+    public static boolean hasBCMDHDCtrlWakelockDivider() {
+        if (Utils.existFile(BCMDHD_CTRL_WAKELOCK_DIVIDER)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void setBCMDHDCtrlWakelockDivider(int value, Context context) {
+        String command = String.valueOf(value + 1);
+        Control.runCommand(command, BCMDHD_CTRL_WAKELOCK_DIVIDER, Control.CommandType.GENERIC, context);
+    }
+
+    public static int getBCMDHDCtrlWakelockDivider() {
+        int value = Utils.stringToInt(Utils.readFile(BCMDHD_CTRL_WAKELOCK_DIVIDER));
+        return value - 1;
+    }    
+
 }
